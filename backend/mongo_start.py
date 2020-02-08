@@ -1,7 +1,7 @@
 import pymongo
 import re
 
-connection = pymongo.MongoClient('mongodb+srv://BassamMetwally:<password>@androidcluster-rrixv.mongodb.net/test?retryWrites=true&w=majority')
+connection = pymongo.MongoClient('<URL>')
 db = connection['test-database']
 courses = db.courses
 
