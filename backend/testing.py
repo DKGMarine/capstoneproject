@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -13,25 +13,32 @@ db = firestore.client()
 
 
 
-@app.route('/')
+@app.route('/login', methods = ['POST', 'GET'])
 def hello():
-    doc_ref = db.collection(u'users').document(u'MainPage')
-    doc_ref.set({
-        u'first': u'Ada',
-        u'last': u'Lovelace',
-        u'born': 1915
-    })
-    return "Hello World!"
+#    doc_ref = db.collection(u'users').document(u'MainPage')
+#    doc_ref.set({
+#        u'first': u'Ada',
+#        u'last': u'Lovelace',
+#        u'born': 1915
+    #})
+    language = request.args.get('username')
+    #
+    if request.method == 'POST':
+        return "You Sent a post request"
+    if request.method == 'GET':
+        return "You sent a GET request"
+    return "Hello World!{}".format(language)
 
-@app.route('/home')
+
+@app.route('/signup', methods = ['POST', 'GET'])
 def again():
-    doc_ref = db.collection(u'users').document(u'HomeRoute')
-    doc_ref.set({
-        u'first': u'Ada',
-        u'last': u'Lovelace',
-        u'born': 1915
-    })
-    return "Hello Page"
+    doc_ref = db.collection(u'users')
+    query_ref = doc_ref.where(u'first', u'==', u'Ada').stream()
+    for doc in query_ref:
+        print(u'{} => {}'.format(doc.id, doc.to_dict()))
+
+
+    return "Heyy"
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
