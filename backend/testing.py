@@ -22,9 +22,12 @@ def hello():
 #        u'born': 1915
     #})
     language = request.args.get('username')
+    doc_ref = db.collection(u'users')
+    query_ref = doc_ref.where(u'first', u'==', u'Ada').stream()
     #
     if request.method == 'POST':
-        return "You Sent a post request"
+        for doc in query_ref:
+            return "You Sent a post request {}".format(doc.to_dict())
     if request.method == 'GET':
         return "You sent a GET request"
     return "Hello World!{}".format(language)
