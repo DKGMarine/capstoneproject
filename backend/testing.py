@@ -8,7 +8,6 @@ app = Flask(__name__)
 
 cred = credentials.Certificate('auth.json')
 firebase_admin.initialize_app(cred)
-
 db = firestore.client()
 
 
@@ -23,7 +22,7 @@ def login_data_validation(username, password):
 
 
 def signup_data_validation(username=None, password=None, DOB=None, ID=None, firstName=None,lastName=None ):
-    data = (username, password, DOB, ID, firstNAme, lastName)
+    data = (username, password, DOB, ID, firstName, lastName)
 
     for loop in data:
         if loop == "":
@@ -37,7 +36,7 @@ def signup_data_validation(username=None, password=None, DOB=None, ID=None, firs
 
 def signup_data_duplicate_check(username=None, ID=None):
     doc_ref = db.collection(u'users')
-    query_ref = doc_ref.where(u'username',u'==',username).stream()
+    query_ref = doc_ref.where(u'username', u'==', username).stream()
 
     return_value = []
 
@@ -50,6 +49,10 @@ def signup_data_duplicate_check(username=None, ID=None):
     return True
 
 
+
+@app.route('/')
+def homePage():
+    return "This is Google App Engine. Select a proper Route."
 
 
 @app.route('/login', methods = ['POST', 'GET'])
@@ -156,7 +159,7 @@ def teams():
     return json.dumps(data)
 
 
-@app.route('/fundraisersGroups', methods = ['POST', 'GET'])
+@app.route('/fundraisersGroups', methods = ['POST','GET'])
 def fundraisersGroups():
     if request.method == 'GET':
         return "Access Denied"
@@ -167,8 +170,8 @@ def fundraisersGroups():
     for docs in query_ref:
         data = docs.to_dict()
 
-    res = not bool(empty)
-    if (res):
+    
+    if (1):
         return "404"
     return json.dupms(data)
 
@@ -177,4 +180,5 @@ def fundraisersGroups():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
+
