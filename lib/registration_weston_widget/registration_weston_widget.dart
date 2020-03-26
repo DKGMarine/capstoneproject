@@ -48,20 +48,18 @@ class RegistrationWestonWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                          height: 269,
-                          margin: EdgeInsets.only(left: 1),
+                          margin: EdgeInsets.only(top: 0, left: 1),
                           child: Image.asset(
                             "assets/images/stars-5-4.png",
                             fit: BoxFit.fill,
                           ),
                         ),
                         Expanded(
-                          flex: 1,
                           child: Container(
-                            margin: EdgeInsets.only(top: 251, right: 5),
+                            margin: EdgeInsets.only(top: 220, right: 5),
                             child: Image.asset(
                               "assets/images/stars-5-3.png",
-                              fit: BoxFit.fill,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
@@ -77,9 +75,8 @@ class RegistrationWestonWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
-                          flex: 1,
                           child: Container(
-                            margin: EdgeInsets.only(left: 15, right: 344, bottom: 72),
+                            margin: EdgeInsets.only(left: 15, right: 320, bottom: 20),
                             child: FlatButton(
                               onPressed: () => this.onBackwardArrowPressed(context),
                               color: Color.fromARGB(0, 0, 0, 0),
@@ -93,16 +90,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                                 children: [
                                   Image.asset("assets/images/backward-arrow-4.png",),
                                   SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                    ),
+                                    width: 40,
                                   ),
                                 ],
                               ),
@@ -112,7 +100,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Container(
-                            margin: EdgeInsets.only(top: 72),
+                            margin: EdgeInsets.only(),
                             child: Text(
                               "Create New Account",
                               textAlign: TextAlign.center,
@@ -125,8 +113,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
+                          Container(
                           child: Image.asset(
                             "assets/images/stars-5.png",
                             fit: BoxFit.fill,
@@ -137,7 +124,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                   ),
                   Positioned(
                     left: 39,
-                    top: 329,
+                    top: 340,
                     right: 42,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,12 +136,11 @@ class RegistrationWestonWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Expanded(
-                                flex: 1,
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Container(
                                     height: 12,
-                                    margin: EdgeInsets.only(top: 3, right: 13),
+                                    margin: EdgeInsets.only(top: 3),
                                     child: Image.asset(
                                       "assets/images/group-2.png",
                                       fit: BoxFit.none,
@@ -162,15 +148,15 @@ class RegistrationWestonWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                flex: 1,
-                                child: Align(
+
+                                Align(
                                   alignment: Alignment.topLeft,
                                   child: Container(
-                                    margin: EdgeInsets.only(left: 13),
+                                    margin: EdgeInsets.only(right: 37),
+                                    height: 30,
                                     child: Text(
                                       "Name",
-                                      textAlign: TextAlign.center,
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: AppColors.primaryText,
                                         fontFamily: "Ubuntu",
@@ -180,7 +166,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
+
                             ],
                           ),
                         ),
@@ -188,7 +174,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Container(
                             width: 60,
-                            height: 18,
+                            height: 20,
                             margin: EdgeInsets.only(left: 13, top: 43),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -197,7 +183,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   child: Container(
                                     width: 13,
-                                    height: 12,
+                                    height: 20,
                                     child: Image.asset(
                                       "assets/images/group-2.png",
                                       fit: BoxFit.none,
@@ -216,6 +202,7 @@ class RegistrationWestonWidget extends StatelessWidget {
                                         fontFamily: "Ubuntu",
                                         fontWeight: FontWeight.w300,
                                         fontSize: 14,
+
                                       ),
                                     ),
                                   ),

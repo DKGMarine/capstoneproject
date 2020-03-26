@@ -28,7 +28,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -45,7 +44,42 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 
-  # An image asset can refer to one or more resolution-specific "variants", see
+  assets:
+    - assets/images/sb.png
+    - assets/images/stars-5.png
+    - assets/images/stars-5-2.png
+    - assets/images/stars-5-3.png
+    - assets/images/stars-5-4.png
+    - assets/images/158335311763927743.png
+    - assets/images/group-2.png
+    - assets/images/group-2-2.png
+    - assets/images/union-7.png
+    - assets/images/union-43.png
+    - assets/images/bg-3.png
+    - assets/images/backward-arrow.png
+    - assets/images/backward-arrow-2.png
+    - assets/images/backward-arrow-4.png
+    - assets/images/dropbox.png
+    - assets/images/icon-calendar.png
+    - assets/images/icon-customers.png
+    - assets/images/icon-dashboard.png
+    - assets/images/icon-invoices.png
+    - assets/images/icon-products.png
+    - assets/images/icon-setting.png
+    - assets/images/path-3149.png
+    - assets/images/path-3149-2.png
+    - assets/images/path-3150.png
+    - assets/images/path-3150-2.png
+    - assets/images/path-3151.png
+    - assets/images/path-3152.png
+    - assets/images/path-3157.png
+    - assets/images/path-3161.png
+    - assets/images/path-3163.png
+    - assets/images/sidebarbg.png
+    - assets/images/sidebarbg-2.png
+    - assets/images/symbol-156--1.png
+
+        # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see

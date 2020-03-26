@@ -43,7 +43,7 @@ class LoginWestonWidget extends StatelessWidget {
               left: -1,
               top: 139,
               right: -1,
-              bottom: 259,
+              bottom: 200,
               child: Image.asset(
                 "assets/images/stars-5.png",
                 fit: BoxFit.fill,
@@ -57,11 +57,10 @@ class LoginWestonWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    width: 225,
+                    width: 50,
                     height: 71,
                     child: Image.asset(
-                      "assets/images/158335311763927743.png",
-                      fit: BoxFit.fill,
+                      "assets/images/158335311763927743.png"
                     ),
                   ),
                   Align(
@@ -77,7 +76,7 @@ class LoginWestonWidget extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Container(
                               width: 14,
-                              height: 13,
+                              height: 12,
                               margin: EdgeInsets.only(top: 2),
                               child: Image.asset(
                                 "assets/images/group-2-2.png",
@@ -102,17 +101,14 @@ class LoginWestonWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      width: 299,
-                      height: 22,
+                      width: 320,
+                      height: 27,
                       margin: EdgeInsets.only(top: 3),
                       decoration: BoxDecoration(
-                        border: Border.fromBorderSide(Borders.primaryBorder),
-                        boxShadow: [
-                          Shadows.secondaryShadow,
-                        ],
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       child: TextField(
@@ -127,6 +123,7 @@ class LoginWestonWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
@@ -134,12 +131,12 @@ class LoginWestonWidget extends StatelessWidget {
                       height: 18,
                       margin: EdgeInsets.only(left: 48, top: 10),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Align(
                             alignment: Alignment.topLeft,
                             child: Container(
-                              width: 9,
+                              width: 8,
                               height: 12,
                               margin: EdgeInsets.only(top: 4),
                               child: Image.asset(
@@ -168,18 +165,16 @@ class LoginWestonWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      width: 299,
+                      width: 320,
                       height: 24,
                       margin: EdgeInsets.only(top: 3),
                       decoration: BoxDecoration(
-                        border: Border.fromBorderSide(Borders.primaryBorder),
-                        boxShadow: [
-                          Shadows.secondaryShadow,
-                        ],
                         borderRadius: BorderRadius.all(Radius.circular(8)),
+
                       ),
                       child: TextField(
                         style: TextStyle(
@@ -195,11 +190,11 @@ class LoginWestonWidget extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 267,
+                    height: 270,
                     margin: EdgeInsets.only(top: 37),
                     child: Image.asset(
                       "assets/images/sb.png",
-                      fit: BoxFit.fill,
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ],
@@ -207,15 +202,15 @@ class LoginWestonWidget extends StatelessWidget {
             ),
             Positioned(
               left: 38,
-              top: 393,
+              top: 425,
               right: 38,
-              bottom: 11,
+              bottom: 1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
                     width: 300,
-                    height: 51,
+                    height: 42,
                     child: FlatButton(
                       onPressed: () => this.onRectangle14Pressed(context),
                       color: AppColors.secondaryElement,
@@ -230,8 +225,8 @@ class LoginWestonWidget extends StatelessWidget {
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),

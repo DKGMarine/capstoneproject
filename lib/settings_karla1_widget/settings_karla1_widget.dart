@@ -161,7 +161,7 @@ class SettingsKarla1Widget extends StatelessWidget {
                               borderRadius: BorderRadius.all(Radius.circular(15)),
                             ),
                             child: ListView.builder(
-                              itemCount: 15,
+                              itemCount: 15, itemBuilder: (BuildContext context, int index) {},
                             ),
                           ),
                         ],

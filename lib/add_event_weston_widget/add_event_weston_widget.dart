@@ -353,7 +353,8 @@ class AddEventWestonWidget extends StatelessWidget {
                             ),
                           ),
                           child: ListView.builder(
-                            itemCount: 15,
+                            // ignore: missing_return
+                            itemCount: 15, itemBuilder: (BuildContext context, int index) {},
                           ),
                         ),
                       ),
@@ -410,7 +411,8 @@ class AddEventWestonWidget extends StatelessWidget {
                             border: Border.fromBorderSide(Borders.secondaryBorder),
                           ),
                           child: ListView.builder(
-                            itemCount: 15,
+                            // ignore: missing_return
+                            itemCount: 15, itemBuilder: (BuildContext context, int index) {},
                           ),
                         ),
                       ),
