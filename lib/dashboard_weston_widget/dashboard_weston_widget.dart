@@ -32,7 +32,7 @@ class DashboardWestonWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  width: 17,
+                  width: 30,
                   height: 17,
                   margin: EdgeInsets.only(left: 15, top: 31),
                   child: FlatButton(
@@ -46,7 +46,7 @@ class DashboardWestonWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("assets/images/backward-arrow.png",),
+                        Image.asset("assets/images/backward-arrow-4.png",),
                         SizedBox(
                           width: 10,
                         ),
@@ -67,15 +67,15 @@ class DashboardWestonWidget extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  width: 142,
-                  height: 64,
+                  width: 160,
+                  height: 100,
                   margin: EdgeInsets.only(left: 15),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Positioned(
                         left: 0,
-                        top: 0,
+                        top: 10,
                         child: Text(
                           "Dashboard",
                           textAlign: TextAlign.left,
@@ -89,9 +89,9 @@ class DashboardWestonWidget extends StatelessWidget {
                       ),
                       Positioned(
                         left: 3,
-                        top: 43,
+                        top: 53,
                         child: Text(
-                          "March 4, 2020",
+                          "March 5, 2020",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -136,11 +136,11 @@ class DashboardWestonWidget extends StatelessWidget {
                       Positioned(
                         top: 0,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               width: 314,
-                              height: 174,
+                              height: 180,
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -149,7 +149,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     right: 0,
                                     child: Image.asset(
                                       "assets/images/path-3157.png",
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                   Positioned(
@@ -158,7 +158,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     right: 26,
                                     bottom: 1,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -202,12 +202,12 @@ class DashboardWestonWidget extends StatelessWidget {
                                           height: 28,
                                           margin: EdgeInsets.only(left: 7, right: 3),
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Align(
                                                 alignment: Alignment.bottomLeft,
                                                 child: Container(
-                                                  margin: EdgeInsets.only(bottom: 1),
+                                                  margin: EdgeInsets.only(bottom: 7),
                                                   child: Text(
                                                     "\$3671",
                                                     textAlign: TextAlign.left,
@@ -222,7 +222,9 @@ class DashboardWestonWidget extends StatelessWidget {
                                               ),
                                               Spacer(),
                                               Align(
-                                                alignment: Alignment.bottomLeft,
+                                                alignment: Alignment.bottomRight,
+                                                child: Container(
+                                                  margin: EdgeInsets.only(bottom: 7),
                                                 child: Text(
                                                   "Goal",
                                                   textAlign: TextAlign.right,
@@ -233,6 +235,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                                     fontSize: 19,
                                                   ),
                                                 ),
+                                        ),
                                               ),
                                             ],
                                           ),
@@ -279,7 +282,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19, top: 12),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -297,7 +300,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 27),
+                                            margin: EdgeInsets.only(left: 20),
                                             child: Text(
                                               "Cookie table",
                                               textAlign: TextAlign.left,
@@ -318,7 +321,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -357,7 +360,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -377,7 +380,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 4),
                                             child: Text(
-                                              "Weston, Josh, Karla",
+                                              "Weston",
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -396,7 +399,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.topLeft,
@@ -430,13 +433,12 @@ class DashboardWestonWidget extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  Spacer(),
                                   Container(
                                     width: 182,
                                     height: 23,
                                     margin: EdgeInsets.only(left: 19, bottom: 20),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
@@ -454,7 +456,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 32, bottom: 2),
+                                            margin: EdgeInsets.only(left: 10),
                                             child: Text(
                                               "3:30 PM - 5:00 PM",
                                               textAlign: TextAlign.left,
@@ -480,6 +482,8 @@ class DashboardWestonWidget extends StatelessWidget {
                                 color: AppColors.primaryBackground,
                                 borderRadius: BorderRadius.all(Radius.circular(40)),
                               ),
+                              margin: EdgeInsets.only(top: 8),
+
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -498,11 +502,11 @@ class DashboardWestonWidget extends StatelessWidget {
                                   ),
                                   Spacer(),
                                   Container(
-                                    width: 161,
+                                    width: 200,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 12),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
@@ -522,7 +526,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "04/25/2019",
+                                              "04/25/19",
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -541,7 +545,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                     height: 21,
                                     margin: EdgeInsets.only(left: 12),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
@@ -559,7 +563,7 @@ class DashboardWestonWidget extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 44),
+                                            margin: EdgeInsets.only(left: 40),
                                             child: Text(
                                               "Need backup",
                                               textAlign: TextAlign.left,
@@ -576,11 +580,11 @@ class DashboardWestonWidget extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    width: 158,
+                                    width: 160,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 12, bottom: 55),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
