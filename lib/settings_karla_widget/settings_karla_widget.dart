@@ -17,9 +17,7 @@ class SettingsKarlaWidget extends StatelessWidget {
   
   void onBackwardArrowPressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => SideBarWeston3Widget()));
   
-  void onAboutPressed(BuildContext context) {
-  
-  }
+  void onAboutPressed(BuildContext context) { }
   
   void onLogoutPressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginWestonWidget()));
   
@@ -39,7 +37,7 @@ class SettingsKarlaWidget extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(
-                  margin: EdgeInsets.only(left: 14, top: 18, right: 344, bottom: 34),
+                  margin: EdgeInsets.only(left: 5, top: 3, right: 354, bottom: 10),
                   child: FlatButton(
                     onPressed: () => this.onBackwardArrowPressed(context),
                     color: Color.fromARGB(0, 0, 0, 0),
@@ -71,7 +69,7 @@ class SettingsKarlaWidget extends StatelessWidget {
               ),
               Container(
                 height: 35,
-                margin: EdgeInsets.only(top: 34),
+                margin: EdgeInsets.only(top: 4, bottom: 5),
                 child: FlatButton(
                   onPressed: () => this.onAboutPressed(context),
                   color: AppColors.primaryBackground,
@@ -94,6 +92,7 @@ class SettingsKarlaWidget extends StatelessWidget {
               ),
               Container(
                 height: 35,
+                margin: EdgeInsets.only(bottom: 700),
                 child: FlatButton(
                   onPressed: () => this.onLogoutPressed(context),
                   color: AppColors.primaryElement,
