@@ -34,7 +34,7 @@ def signup_data_validation(username=None, password=None, DOB=None, ID=None, firs
 
     return True
 
-def signup_data_duplicate_check(username=None, ID=None):
+def signup_data_duplicate_check(username=None):
     doc_ref = db.collection(u'users')
     query_ref = doc_ref.where(u'username', u'==', username).stream()
 
@@ -61,8 +61,8 @@ def login():
     if request.method == 'GET':
         return "Access Denied"
 
-    username = request.args.get('username')
-    password = request.args.get('password')
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     print(login_data_validation(username,password))
     if (login_data_validation(username,password) == False):
@@ -95,16 +95,20 @@ def signup():
 
 
     doc_ref   = db.collection(u'users')
-    username  = request.args.get('username')
-    password  = request.args.get('password')
-    DOB       = request.args.get('DOB')
-    firstName = request.args.get('firstName')
-    lastName  = request.args.get('lastName')
-    query_ref = doc_ref.where(u'first', u'==', u'Ada').stream()
+    username  = request.form.get('username')
+    password  = request.form.get('password')
+    DOB       = request.form.get('DOB')
+    firstName = request.form.get('firstName')
+    lastName  = request.form.get('lastName')
+    if(signup_data_duplicate_check(username)):
+        return "Duplicate Data"
 
 
-    if (signup_data_duplicate_check(username, "25") == False):
-        return "Duplicate Account Detected. Please Enter new data"
+    #query_ref = doc_ref.where(u'first', u'==', u'Ada').stream()
+
+
+    #if (signup_data_duplicate_check(username, "25") == False):
+    #    return "Duplicate Account Detected. Please Enter new data"
 
 
     data = {
@@ -128,13 +132,16 @@ def overview():
 
     token    = request.args.get('ID')
     doc_ref = db.collection(u'Overview')
-    query_ref = doc_ref.where(u'UniqueID',u'==',token).stream()
+    query_ref = doc_ref.where(u'UniqueID',u'==',27275).stream()
 
     data = []
     print(query_ref)
     for docs in query_ref:
         data = docs.to_dict()
         print(u'{} => {}'.format(docs.id, type(docs.to_dict())))
+
+    if (len(data) == 0):
+        return "NO DATA Found"
     return json.dumps(data)
 
 
@@ -144,9 +151,9 @@ def teams():
     if request.method == 'GET':
         return "Access Denied"
 
-    ID = request.args.get('ID')
+    ID = request.form.get('ID')
     doc_ref = db.collection(u'teams')
-    query_ref = doc_ref.where(u'scoutID',u'==',ID).stream()
+    query_ref = doc_ref.where(u'scoutID',u'==','27275').stream()
 
     data = []
     print(query_ref)
@@ -170,15 +177,14 @@ def fundraisersGroups():
     for docs in query_ref:
         data = docs.to_dict()
 
-    
-    if (1):
-        return "404"
-    return json.dupms(data)
 
+    #if (1):
+        #return "404"
+    return json.dumps(data)
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
-
+    app.run(debug=True)
+    #Port 8080
