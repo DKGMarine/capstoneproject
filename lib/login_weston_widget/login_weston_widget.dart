@@ -13,14 +13,14 @@ import 'package:capstoneproject/values/values.dart';
 
 
 class LoginWestonWidget extends StatelessWidget {
-  
+
   void onSIGNUPPressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationWestonWidget()));
-  
+
   void onRectangle14Pressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardWestonWidget()));
-  
+
   @override
   Widget build(BuildContext context) {
-  
+
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -32,21 +32,11 @@ class LoginWestonWidget extends StatelessWidget {
           children: [
             Positioned(
               left: -1,
-              top: -123,
+              top: -50,
               right: -1,
               child: Image.asset(
-                "assets/images/stars-5-2.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-            Positioned(
-              left: -1,
-              top: 139,
-              right: -1,
-              bottom: 200,
-              child: Image.asset(
-                "assets/images/stars-5.png",
-                fit: BoxFit.fill,
+                "assets/images/login_background.png",
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(
@@ -56,11 +46,12 @@ class LoginWestonWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+
                   Container(
                     width: 50,
                     height: 71,
                     child: Image.asset(
-                      "assets/images/158335311763927743.png"
+                        "assets/images/158335311763927743.png"
                     ),
                   ),
                   Align(
@@ -187,14 +178,6 @@ class LoginWestonWidget extends StatelessWidget {
                         maxLines: 1,
                         autocorrect: false,
                       ),
-                    ),
-                  ),
-                  Container(
-                    height: 270,
-                    margin: EdgeInsets.only(top: 37),
-                    child: Image.asset(
-                      "assets/images/sb.png",
-                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ],
