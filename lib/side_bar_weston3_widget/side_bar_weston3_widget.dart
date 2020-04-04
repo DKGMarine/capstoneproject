@@ -36,9 +36,7 @@ class SideBarWeston3Widget extends StatelessWidget {
   void onDashboardPressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardWestonWidget()));
   
   void onBackwardArrowPressed(BuildContext context) {
-  
     Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginWestonWidget()));
   }
   
   @override
@@ -56,9 +54,9 @@ class SideBarWeston3Widget extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: Container(
-                width: 17,
-                height: 17,
-                margin: EdgeInsets.only(top: 18, right: 14),
+                width: 50,
+                height: 100,
+
                 child: FlatButton(
                   onPressed: () => this.onBackwardArrowPressed(context),
                   color: Color.fromARGB(0, 0, 0, 0),
@@ -70,18 +68,9 @@ class SideBarWeston3Widget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/images/backward-arrow-4.png",),
+                      Image.asset("assets/images/backward-arrow.png",),
                       SizedBox(
                         width: 10,
-                      ),
-                      Text(
-                        "",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                        ),
                       ),
                     ],
                   ),

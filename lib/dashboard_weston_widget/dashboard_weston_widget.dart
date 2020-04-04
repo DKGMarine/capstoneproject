@@ -24,7 +24,7 @@ class DashboardWestonWidget extends StatelessWidget {
         constraints: BoxConstraints.expand(),
         child: Style(
           decoration: StyleDecoration(
-            color: Color.fromARGB(255, 40, 73, 100),
+            color: Color.fromARGB(240, 90, 20, 0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
