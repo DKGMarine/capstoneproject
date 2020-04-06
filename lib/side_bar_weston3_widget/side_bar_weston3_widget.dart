@@ -117,7 +117,7 @@ class SideBarWeston3Widget extends StatelessWidget {
                   Positioned(
                     left: 0,
                     top: 0,
-                    right: 0,
+                    right: 22,
                     child: FlatButton(
                       onPressed: () => this.onViewPressed(context),
                       color: Color.fromARGB(0, 0, 0, 0),
@@ -150,7 +150,7 @@ class SideBarWeston3Widget extends StatelessWidget {
                   Positioned(
                     left: 0,
                     top: 51,
-                    right: 0,
+                    right: 6,
                     child: FlatButton(
                       onPressed: () => this.onProductsPressed(context),
                       color: Color.fromARGB(0, 0, 0, 0),
@@ -224,7 +224,7 @@ class SideBarWeston3Widget extends StatelessWidget {
                   Positioned(
                     left: 0,
                     top: 0,
-                    right: 0,
+                    right: 19,
                     child: FlatButton(
                       onPressed: () => this.onInvoicesPressed(context),
                       color: Color.fromARGB(0, 0, 0, 0),
@@ -266,7 +266,7 @@ class SideBarWeston3Widget extends StatelessWidget {
                   Positioned(
                     left: 0,
                     top: 52,
-                    right: 0,
+                    right: 4,
                     child: FlatButton(
                       onPressed: () => this.onSettingsPressed(context),
                       color: Color.fromARGB(0, 0, 0, 0),
@@ -299,7 +299,7 @@ class SideBarWeston3Widget extends StatelessWidget {
                   Positioned(
                     left: 0,
                     top: 0,
-                    right: 0,
+                    right: 2,
                     child: FlatButton(
                       onPressed: () => this.onCalendarPressed(context),
                       color: Color.fromARGB(0, 0, 0, 0),

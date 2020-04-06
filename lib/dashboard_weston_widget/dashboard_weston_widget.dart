@@ -13,15 +13,17 @@ import 'package:capstoneproject/values/values.dart';
 
 
 class DashboardWestonWidget extends StatelessWidget {
-  
-  void onBackwardArrowPressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => SideBarWeston3Widget()));
-  
+
+  void onBackwardArrowPressed(BuildContext context) =>
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SideBarWeston3Widget()));
+
   @override
   Widget build(BuildContext context) {
-  
+
     return Scaffold(
+
       body: Container(
-        constraints: BoxConstraints.expand(),
         child: Style(
           decoration: StyleDecoration(
             color: Color.fromARGB(240, 90, 20, 0),
@@ -225,17 +227,17 @@ class DashboardWestonWidget extends StatelessWidget {
                                                 alignment: Alignment.bottomRight,
                                                 child: Container(
                                                   margin: EdgeInsets.only(bottom: 7),
-                                                child: Text(
-                                                  "Goal",
-                                                  textAlign: TextAlign.right,
-                                                  style: TextStyle(
-                                                    color: Color.fromARGB(255, 208, 219, 233),
-                                                    fontFamily: "Source Sans Pro",
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 19,
+                                                  child: Text(
+                                                    "Goal",
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                      color: Color.fromARGB(255, 208, 219, 233),
+                                                      fontFamily: "Source Sans Pro",
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: 19,
+                                                    ),
                                                   ),
                                                 ),
-                                        ),
                                               ),
                                             ],
                                           ),
