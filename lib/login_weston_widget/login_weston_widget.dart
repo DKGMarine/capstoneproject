@@ -6,10 +6,65 @@
 *  Copyright © 2018 [Company]. All rights reserved.
     */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:capstoneproject/dashboard_weston_widget/dashboard_weston_widget.dart';
 import 'package:capstoneproject/registration_weston_widget/registration_weston_widget.dart';
 import 'package:capstoneproject/values/values.dart';
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+
+class Album{
+
+  final int ID;
+
+  Album({this.ID});
+
+  factory Album.fromJson(Map<String, dynamic> json){
+
+    return Album(
+      ID: json['ID'],
+    );
+
+
+  }
+}
+
+
+Future<Album> createAlbum(String username, String password) async {
+
+
+
+  final http.Response response = await http.post(
+      'https://capstoneproject-271322.appspot.com/login',
+
+    /*
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+
+     */
+    body:
+
+      {
+        'username':username,
+        'password':password,
+      }
+
+  );
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+    return Album.fromJson(json.decode(response.body));
+
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+     throw Exception('Failed to load album');
+  }
+
+}
 
 
 class LoginWestonWidget extends StatelessWidget {
@@ -18,6 +73,12 @@ class LoginWestonWidget extends StatelessWidget {
 
   void onRectangle14Pressed(BuildContext context) => Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardWestonWidget()));
 
+  Future<Album> futureAlbum;
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
+  String username;
+  String password;
+  int ID;
   @override
   Widget build(BuildContext context) {
 
@@ -103,6 +164,7 @@ class LoginWestonWidget extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       child: TextField(
+                        controller: myController,
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
@@ -168,6 +230,7 @@ class LoginWestonWidget extends StatelessWidget {
 
                       ),
                       child: TextField(
+                        controller: myController2,
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
@@ -195,7 +258,29 @@ class LoginWestonWidget extends StatelessWidget {
                     width: 300,
                     height: 42,
                     child: FlatButton(
-                      onPressed: () => this.onRectangle14Pressed(context),
+                      onPressed: () {
+
+                        username = myController.text;
+                        password = myController2.text;
+
+                        futureAlbum = createAlbum(username, password);
+
+                        FutureBuilder<Album>(
+                          future: futureAlbum,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Text(snapshot.data.ID.toString());
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            }
+
+                            return CircularProgressIndicator();
+                          },
+                        );
+
+                        this.onRectangle14Pressed(context);
+
+                        },
                       color: AppColors.secondaryElement,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -258,7 +343,9 @@ class LoginWestonWidget extends StatelessWidget {
                               height: 15,
                               margin: EdgeInsets.only(left: 20, bottom: 1),
                               child: FlatButton(
-                                onPressed: () => this.onSIGNUPPressed(context),
+                                onPressed: () {
+                                  this.onSIGNUPPressed(context);
+                                },
                                 color: Color.fromARGB(0, 0, 0, 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(0)),
