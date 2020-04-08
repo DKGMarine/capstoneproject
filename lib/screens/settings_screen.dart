@@ -9,7 +9,7 @@ import './login_screen.dart';
   void onAboutPressed(BuildContext context) { }
   
   void onLogoutPressed(BuildContext context) { }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +51,6 @@ import './login_screen.dart';
               ),
               Container(
                 height: 35,
-                margin: EdgeInsets.only(bottom: 700),
                 child: FlatButton(
                   onPressed: () => this.onLogoutPressed(context),
                   color: AppColors.primaryElement,
