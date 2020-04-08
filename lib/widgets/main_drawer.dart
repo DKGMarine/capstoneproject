@@ -66,13 +66,7 @@ class MyDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed(SettingsScreen.routeName);
             }
           ),
-          buildListTile(
-            'Settings',
-            AssetImage('assets/images/icon-setting.png'),
-            () {
-              Navigator.of(context).pushNamed(SettingsScreen.routeName);
-            }
-          ),
+         
         ],
       ),
     );
