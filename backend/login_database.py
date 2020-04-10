@@ -1,5 +1,8 @@
 #Error! does not read the information passed in HTTP
 
+#Error Code: 10 for user Not Found
+#Error Code: 11 is for bad information
+
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -47,7 +50,7 @@ class loginDatabase:
             data = doc.to_dict()
 
         if len(data) == 0:
-            return "10"
+            return "Error Code: 10"
 
         return json.dumps(data)
 
@@ -65,7 +68,7 @@ class loginDatabase:
         for docs in query_ref:
             data.append(docs.to_dict())
         if (len(data) == 0):
-            return "NO DATA Found"
+            return "Error Code: 10"
 
         return json.dumps(data)
 
@@ -77,7 +80,7 @@ class loginDatabase:
         for docs in query_ref:
             data.append(docs.to_dict())
         if (len(data) == 0):
-            return "NO DATA Found"
+            return "Error Code 10"
 
         return json.dumps(data)
 
@@ -90,7 +93,7 @@ class loginDatabase:
             data.append(docs.to_dict())
 
         if (len(data) == 0):
-            return "NO DATA Found"
+            return "Error Code 10"
 
         return json.dumps(data)
 
@@ -114,3 +117,61 @@ class loginDatabase:
         doc_ref.add(data)
 
         return "Done"
+
+
+    #Finish Route
+    def teamsWithNoFundraiser(self, Token):
+
+        doc_ref = db.collection(u'teams')
+        query_ref = doc_ref.where(u'FundraiserID',u'==',"").stream()
+        print("HEEEY")
+        data = []
+        for docs in query_ref:
+            data.append(docs.to_dict())
+            print(docs)
+
+        if (len(data) == 0):
+            return "Error Code 10"
+
+        return json.dumps(data)
+
+    #Finish Route
+    def teamMembers(self, teamID):
+        doc_ref = db.collection(u'TeamMember')
+        query_ref = doc_ref.where(u'TeamID',u'==',str(teamID)).stream()
+
+        data = []
+        for docs in query_ref:
+            data.append(docs.to_dict())
+        if (len(data) == 0):
+            return "Error Code 10"
+
+        return json.dumps(data)
+
+
+    #Get by ScoutID
+    def teamWithOneFundraiser(self, fundraiserID):
+
+        doc_ref = db.collection(u'teams')
+        query_ref = doc_ref.where(u'FundraiserID',u'==',str(167)).stream()
+
+        data = []
+        for docs in query_ref:
+            data.append(docs.to_dict())
+        if (len(data) == 0):
+            return "Error Code 10"
+
+        return json.dumps(data)
+
+    def teamMembers(self, teamUniqueID):
+
+        doc_ref = db.collection(u'TeamMember')
+        query_ref = doc_ref.where(u'TeamUniqueID',u'==',"again").stream()
+
+        data = []
+        for docs in query_ref:
+            data.append(docs.to_dict())
+        if (len(data) == 0):
+            return "Error Code 10"
+
+        return json.dumps(data)
