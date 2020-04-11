@@ -1,15 +1,18 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import './dashboard_screen.dart'; 
 import 'registration_screen.dart';
 import '../values/values.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
+
+
 
 class Album{
 
   final int ID;
-
   Album({this.ID});
 
   factory Album.fromJson(Map<String, dynamic> json){
@@ -25,16 +28,9 @@ class Album{
 Future<Album> createAlbum(String username, String password) async {
 
 
-
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/login',
 
-    /*
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-
-     */
     body:
 
       {
@@ -46,27 +42,55 @@ Future<Album> createAlbum(String username, String password) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
-    return Album.fromJson(json.decode(response.body));
 
+    try{
+      return Album.fromJson(json.decode(response.body));
+    }catch(err){
+
+      Fluttertoast.showToast(
+          msg: 'Incorrect username/password',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white
+      );
+      return null;
+
+    }
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
      throw Exception('Failed to load album');
   }
+}
+
+class LoginScreen extends StatefulWidget {
+  static const routeName = '/login-screen';
+  LoginScreen({Key key}) : super(key: key);
+
+  _LoginScreen createState(){
+
+    return _LoginScreen();
+  }
 
 }
 
-class LoginScreen extends StatelessWidget {
-  static const routeName = '/login-screen';
+class _LoginScreen extends State<LoginScreen> {
+
+
   void onSIGNUPPressed(BuildContext context) => Navigator.of(context).pushNamed(RegistrationScreen.routeName);
   void onRectangle14Pressed(BuildContext context) => Navigator.of(context).pushNamed(DashboardScreen.routeName);
   
   Future<Album> futureAlbum;
   final myController = TextEditingController();
   final myController2 = TextEditingController();
+  final snackBar = SnackBar(content: Text('Incorrect password/email'), duration: Duration(seconds: 3),);
   String username;
   String password;
   int ID;
+  int userID = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -251,22 +275,16 @@ class LoginScreen extends StatelessWidget {
                         username = myController.text;
                         password = myController2.text;
 
-                        futureAlbum = createAlbum(username, password);
+                          createAlbum(username, password).then((futureAlbum) {
 
-                        FutureBuilder<Album>(
-                          future: futureAlbum,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Text(snapshot.data.ID.toString());
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
+                            if (futureAlbum.ID != null) {
+                              userID = futureAlbum.ID;
+                              this.onRectangle14Pressed(context);
                             }
 
-                            return CircularProgressIndicator();
-                          },
-                        );
+                          }
+                          );
 
-                        this.onRectangle14Pressed(context);
 
                         },
                       color: AppColors.secondaryElement,
@@ -304,6 +322,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
+
                   Container(
                     height: 16,
                     margin: EdgeInsets.only(left: 38, right: 57),

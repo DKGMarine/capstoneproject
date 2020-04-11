@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../styles/style.dart';
 import '../values/values.dart';
 import '../widgets/main_drawer.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -9,7 +10,11 @@ class DashboardScreen extends StatelessWidget {
   static const routeName = '/dashboard-screen';
   @override
   Widget build(BuildContext context) {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('MM/dd/yyyy');
+    String formattedDate = formatter.format(now);
     return Scaffold(
+
       appBar: AppBar(
         elevation: 0,
         title: const Text('Dashboard'),
@@ -27,38 +32,24 @@ class DashboardScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Container(
                   width: 30,
-                  height: 17,
+                  height: 0,
                   margin: EdgeInsets.only(left: 15, top: 31),
                 ),
               ),
               Align(
                 alignment: Alignment.topLeft,
+
                 child: Container(
                   width: 160,
-                  height: 100,
-                  margin: EdgeInsets.only(left: 15),
+                  height: 17,
+                  margin: EdgeInsets.only(left: 15, bottom: 15),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Positioned(
-                        left: 0,
-                        top: 10,
-                        child: Text(
-                          "Dashboard",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontFamily: "Source Sans Pro",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 31,
-                          ),
-                        ),
-                      ),
-                      Positioned(
                         left: 3,
-                        top: 53,
                         child: Text(
-                          "March 5, 2020",
+                          formattedDate,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: AppColors.primaryText,
@@ -71,11 +62,13 @@ class DashboardScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+
               ),
               Expanded(
                 flex: 1,
                 child: Container(
-                  margin: EdgeInsets.only(top: 22),
+                  height: 200,
+                  margin: EdgeInsets.only(),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
