@@ -5,10 +5,9 @@ import './dashboard_screen.dart';
 import 'registration_screen.dart';
 import '../values/values.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
-
-
+import 'package:scoutboard/widgets/globals.dart' as global;
+import 'package:http/http.dart' as http;
 
 class Album{
 
@@ -27,7 +26,6 @@ class Album{
 
 Future<Album> createAlbum(String username, String password) async {
 
-
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/login',
 
@@ -39,6 +37,8 @@ Future<Album> createAlbum(String username, String password) async {
       }
 
   );
+
+
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
@@ -85,12 +85,8 @@ class _LoginScreen extends State<LoginScreen> {
   Future<Album> futureAlbum;
   final myController = TextEditingController();
   final myController2 = TextEditingController();
-  final snackBar = SnackBar(content: Text('Incorrect password/email'), duration: Duration(seconds: 3),);
   String username;
   String password;
-  int ID;
-  int userID = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -278,7 +274,7 @@ class _LoginScreen extends State<LoginScreen> {
                           createAlbum(username, password).then((futureAlbum) {
 
                             if (futureAlbum.ID != null) {
-                              userID = futureAlbum.ID;
+                              global.userID = futureAlbum.ID;
                               this.onRectangle14Pressed(context);
                             }
 
