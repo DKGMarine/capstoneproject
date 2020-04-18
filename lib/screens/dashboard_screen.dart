@@ -25,8 +25,11 @@ class Album{ // change this to parse what data you need
 
 Future<Album> createAlbum(String ID) async {
 
+
+  // trying to connect to database here
+  ID = '167';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
+      'https://capstoneproject-271322.appspot.com/overview', // change this to what page you are requesting data from
 
       body:
 
@@ -37,11 +40,14 @@ Future<Album> createAlbum(String ID) async {
   );
 
 
+  print(ID);
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
+    print(Album.fromJson(json.decode(response.body)));
     try{
+
       return Album.fromJson(json.decode(response.body));
     }catch(err){
       print("Error in returning album");
@@ -66,6 +72,12 @@ class DashboardScreen extends StatelessWidget {
     var now = new DateTime.now();
     var formatter = new DateFormat('MM/dd/yyyy');
     String formattedDate = formatter.format(now);
+
+    createAlbum(global.userID.toString()).then((futureAlbum) {
+
+    print('1');
+
+    });
     return Scaffold(
 
       appBar: AppBar(

@@ -83,7 +83,7 @@ class RegistrationScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 49,
+                      width: 80,
                       height: 18,
                       margin: EdgeInsets.only(left: 47, top: 100),
                       child: Row(
@@ -104,7 +104,7 @@ class RegistrationScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Email",
+                              "Username",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.primaryText,
