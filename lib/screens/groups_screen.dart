@@ -22,8 +22,10 @@ class Album{ // change this to parse what data you need
 
 Future<Album> createAlbum(String ID) async {
 
+
+  ID = '25275';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
+      'https://capstoneproject-271322.appspot.com/teams', // change this to what page you are requesting data from
 
       body:
 
@@ -38,6 +40,7 @@ Future<Album> createAlbum(String ID) async {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
+    print(json.decode(response.body));
     try{
       return Album.fromJson(json.decode(response.body));
     }catch(err) {
@@ -67,6 +70,11 @@ class GroupsScreenState extends State<GroupsScreen>{
   final TextEditingController eCtrl = new TextEditingController();
   @override
   Widget build(BuildContext context){
+    createAlbum(global.userID.toString()).then((futureAlbum) {
+
+      print('1');
+
+    });
     return new Scaffold(
       appBar: AppBar(
         elevation: 0,

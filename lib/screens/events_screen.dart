@@ -23,8 +23,9 @@ class Album{ // change this to parse what data you need
 
 Future<Album> createAlbum(String ID) async {
 
+  ID = '25275';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
+      'https://capstoneproject-271322.appspot.com/fundraiserGroups', // change this to what page you are requesting data from
 
       body:
 
@@ -39,6 +40,7 @@ Future<Album> createAlbum(String ID) async {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
+    print(json.decode(response.body));
     try{
       return Album.fromJson(json.decode(response.body));
     }catch(err) {
@@ -54,9 +56,18 @@ Future<Album> createAlbum(String ID) async {
 
 class EventsScreen extends StatelessWidget {
   Future<Album> futureAlbum;
+
+
   static const routeName = '/events-screen';
   @override
   Widget build(BuildContext context) {
+
+    createAlbum(global.userID.toString()).then((futureAlbum) {
+
+      print('1');
+
+    });
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

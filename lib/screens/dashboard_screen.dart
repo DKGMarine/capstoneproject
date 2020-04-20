@@ -25,9 +25,8 @@ class Album{ // change this to parse what data you need
 
 Future<Album> createAlbum(String ID) async {
 
-
   // trying to connect to database here
-  ID = '167';
+  ID = '25275';
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/overview', // change this to what page you are requesting data from
 
@@ -39,13 +38,11 @@ Future<Album> createAlbum(String ID) async {
 
   );
 
-
-  print(ID);
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
-    print(Album.fromJson(json.decode(response.body)));
+    print(json.decode(response.body));
     try{
 
       return Album.fromJson(json.decode(response.body));
@@ -515,7 +512,7 @@ class DashboardScreen extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.only(left: 19, top: 13),
                                     child: Text(
-                                      "Backups",
+                                      "Low Inventory",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: AppColors.accentText,
@@ -529,14 +526,14 @@ class DashboardScreen extends StatelessWidget {
                                   Container(
                                     width: 200,
                                     height: 21,
-                                    margin: EdgeInsets.only(left: 12),
+                                    margin: EdgeInsets.only(left: 18),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Last backup",
+                                            "Item 1:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -551,7 +548,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "04/25/19",
+                                              "Number of items",
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -566,16 +563,16 @@ class DashboardScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    width: 173,
+                                    width: 200,
                                     height: 21,
-                                    margin: EdgeInsets.only(left: 12),
+                                    margin: EdgeInsets.only(left: 18,),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Status",
+                                            "Item 2:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -588,12 +585,12 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 40),
+                                            margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "Need backup",
+                                              "Number of items",
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
-                                                color: Color.fromARGB(255, 242, 0, 0),
+                                                color: AppColors.primaryText,
                                                 fontFamily: "Source Sans Pro",
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 15,
@@ -605,16 +602,16 @@ class DashboardScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    width: 160,
+                                    width: 240,
                                     height: 21,
-                                    margin: EdgeInsets.only(left: 12, bottom: 55),
+                                    margin: EdgeInsets.only(left: 18, bottom: 55),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Connection",
+                                            "Item 3:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -627,12 +624,12 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 10),
+                                            margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "Connected",
+                                              "Number of low items",
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
-                                                color: AppColors.secondaryText,
+                                                color: AppColors.primaryText,
                                                 fontFamily: "Source Sans Pro",
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 15,
