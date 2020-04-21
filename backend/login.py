@@ -9,7 +9,7 @@ def main_index():
     if request.method == 'GET':
         return "Access Denied"
 
-    username = request.form.get('username')
+    Email = request.form.get('Email')
     password = request.form.get('password')
     object = login_database.loginDatabase()
-    return object.login_function(username, password)
+    return object.login_function(Email, password)
