@@ -70,7 +70,7 @@ class GroupsScreenState extends State<GroupsScreen>{
   final TextEditingController eCtrl = new TextEditingController();
   @override
   Widget build(BuildContext context){
-    createAlbum(global.userID.toString()).then((futureAlbum) {
+    createAlbum(global.userID).then((futureAlbum) {
 
       print('1');
 

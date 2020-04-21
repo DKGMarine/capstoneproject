@@ -1,3 +1,3 @@
 library project.global;
 
-int userID; // user ID
+String userID; // user ID

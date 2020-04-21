@@ -70,7 +70,7 @@ class DashboardScreen extends StatelessWidget {
     var formatter = new DateFormat('MM/dd/yyyy');
     String formattedDate = formatter.format(now);
 
-    createAlbum(global.userID.toString()).then((futureAlbum) {
+    createAlbum(global.userID).then((futureAlbum) {
 
     print('1');
 

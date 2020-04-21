@@ -62,7 +62,7 @@ class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    createAlbum(global.userID.toString()).then((futureAlbum) {
+    createAlbum(global.userID).then((futureAlbum) {
 
       print('1');
 

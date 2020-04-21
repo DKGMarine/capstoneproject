@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class Album{
 
-  final int ID;
+  final String ID;
   Album({this.ID});
 
   factory Album.fromJson(Map<String, dynamic> json){
@@ -38,26 +38,11 @@ Future<Album> createAlbum(String username, String password) async {
 
   );
 
-
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
-
-    try{
       return Album.fromJson(json.decode(response.body));
-    }catch(err){
 
-      Fluttertoast.showToast(
-          msg: 'Incorrect username/password',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white
-      );
-      return null;
-
-    }
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
@@ -271,15 +256,24 @@ class _LoginScreen extends State<LoginScreen> {
                         username = myController.text;
                         password = myController2.text;
 
-                          createAlbum(username, password).then((futureAlbum) {
 
-                            if (futureAlbum.ID != null) {
-                              global.userID = futureAlbum.ID;
-                              this.onRectangle14Pressed(context);
+                            createAlbum(username, password).then((futureAlbum) {
+                              if (futureAlbum.ID != null) {
+                                global.userID = futureAlbum.ID;
+                                this.onRectangle14Pressed(context);
+                              }
                             }
+                            ).catchError((e){
+                              Fluttertoast.showToast(
+                                msg: 'Incorrect username/password',
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                              );
+                            });
 
-                          }
-                          );
 
 
                         },
