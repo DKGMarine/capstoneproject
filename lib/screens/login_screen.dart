@@ -17,14 +17,14 @@ class Album{
   factory Album.fromJson(Map<String, dynamic> json){
 
     return Album(
-      ID: json['ID'],
+      ID: json['scoutID'],
     );
 
 
   }
 }
 
-Future<Album> createAlbum(String username, String password) async {
+Future<Album> createAlbum(String email, String password) async {
 
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/login',
@@ -32,12 +32,13 @@ Future<Album> createAlbum(String username, String password) async {
     body:
 
       {
-        'username':username,
+        'Email':email,
         'password':password,
       }
 
   );
 
+  print(response.body);
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
@@ -70,12 +71,13 @@ class _LoginScreen extends State<LoginScreen> {
   Future<Album> futureAlbum;
   final myController = TextEditingController();
   final myController2 = TextEditingController();
-  String username;
+  String email;
   String password;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
@@ -132,7 +134,7 @@ class _LoginScreen extends State<LoginScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Username",
+                              "Email",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.primaryText,
@@ -253,11 +255,11 @@ class _LoginScreen extends State<LoginScreen> {
                     child: FlatButton(
                       onPressed: () {
 
-                        username = myController.text;
+                        email = myController.text;
                         password = myController2.text;
 
 
-                            createAlbum(username, password).then((futureAlbum) {
+                            createAlbum(email, password).then((futureAlbum) {
                               if (futureAlbum.ID != null) {
                                 global.userID = futureAlbum.ID;
                                 this.onRectangle14Pressed(context);
