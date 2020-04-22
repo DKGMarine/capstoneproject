@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:scoutboard/color/colors.dart';
 
 import '../models/transaction.dart';
 
@@ -45,17 +46,26 @@ class InventoryList extends StatelessWidget {
                           ),
                         ),
                       ),
-                      title: Text(
-                        inventory[index].title,
-                        style: Theme.of(context).textTheme.title,
+                      title: Text(inventory[index].title,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: AppColors.primaryText,
+                          )),
+                      subtitle: Text(inventory[index].category,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: AppColors.primaryText,
+                          )),
+                      trailing: Column(
+                        children: <Widget>[
+                          Text('Qty: ${inventory[index].quantity} ${inventory[index].measurement}',
+                              style: TextStyle(fontSize: 20)),
+                          Text(
+                        'Sold: ${inventory[index].totalSold} ${inventory[index].measurement}',
+                        style: TextStyle(fontSize: 20)
+                        
                       ),
-                      subtitle: Text(
-                        inventory[index].category,
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      trailing: Text(
-                        inventory[index].title,
-                        style: Theme.of(context).textTheme.title,
+                        ],
                       ),
                     ),
                     secondaryActions: <Widget>[
