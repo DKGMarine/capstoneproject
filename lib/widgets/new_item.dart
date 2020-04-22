@@ -80,7 +80,7 @@ class _NewInventoryState extends State<NewInventory> {
                   ),
                 ),
                 controller: _titleController,
-                onSubmitted: (_) => _submitData(),
+                
               ),
               TextField(
                 style: TextStyle(
@@ -103,7 +103,7 @@ class _NewInventoryState extends State<NewInventory> {
                   ),
                 ),
                 controller: _categoryController,
-                onSubmitted: (_) => _submitData(), 
+                 
               ),
               TextField(
                 style: TextStyle(
@@ -127,7 +127,7 @@ class _NewInventoryState extends State<NewInventory> {
                 ),
                 controller: _amountController,
                 keyboardType: TextInputType.number,
-                onSubmitted: (_) => _submitData(),  
+                  
               ),
               TextField(
                 style: TextStyle(
@@ -151,7 +151,7 @@ class _NewInventoryState extends State<NewInventory> {
                 ),
                 controller: _quantityController,
                 keyboardType: TextInputType.number,
-                onSubmitted: (_) => _submitData(),
+                
               ),
               TextField(
                 style: TextStyle(
@@ -174,7 +174,7 @@ class _NewInventoryState extends State<NewInventory> {
                   ),
                 ),
                 controller: _measurementController,
-                onSubmitted: (_) => _submitData(), 
+                 
               ),
               TextField(
                 style: TextStyle(
@@ -198,7 +198,7 @@ class _NewInventoryState extends State<NewInventory> {
                 ),
                 controller: _totalSoldController,
                 keyboardType: TextInputType.number,
-                onSubmitted: (_) => _submitData(), 
+                 
               ),
               RaisedButton(
                 child: Text('Add Inventory'),
