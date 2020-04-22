@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var routeName;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Scoutboard',
       theme: ThemeData(
         primarySwatch: colorCustom,
