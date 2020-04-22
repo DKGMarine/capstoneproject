@@ -87,7 +87,10 @@ class RegistrationScreen extends StatelessWidget {
                 width: 10,
                 height: 17,
                 child: FlatButton(
-                  onPressed: () => this.onBackwardArrowPressed(context),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                    this.onBackwardArrowPressed(context);
+                  },
                   color: Color.fromARGB(0, 0, 0, 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(0)),
