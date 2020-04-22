@@ -586,6 +586,18 @@ class RegistrationScreen extends StatelessWidget {
                           textColor: Colors.white,
                         );
                       }
+                      else if(password.length < 8){
+                        Fluttertoast.showToast(
+                          msg: 'Password must be at least 8 characters long',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+
+
+                      }
                       else if(password != passwordConfirm){
                         Fluttertoast.showToast(
                           msg: 'Passwords do not match!',
@@ -608,9 +620,19 @@ class RegistrationScreen extends StatelessWidget {
                       }else {
 
                         createAlbum(firstName, lastName, dob, email, password).then((message) {
-                          print(message);
-                          this.onRectangle14Pressed(context);
-                        }
+                          if(message == "Error Code 10 Email Duplicate"){
+                            Fluttertoast.showToast(
+                              msg: 'Email Duplicate',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIos: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                            );
+                          }else {
+                            this.onRectangle14Pressed(context);
+                          }
+                          }
                         ).catchError((e){
                           Fluttertoast.showToast(
                             msg: 'Error in registration',
