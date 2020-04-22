@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: colorCustom,
         canvasColor: colorCustom,
+        focusColor: AppColors.primaryText,
         accentColor: AppColors.secondaryElement,
         fontFamily: 'SourceSansPro',
         textTheme: ThemeData.light().textTheme.copyWith(
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => LoginScreen(),
+        '/': (ctx) => DashboardScreen(),
        DashboardScreen.routeName: (ctx) => DashboardScreen(),
        LoginScreen.routeName: (ctx) => LoginScreen(),
        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),

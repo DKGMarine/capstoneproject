@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
+import '../color/colors.dart';
 
 class NewInventory extends StatefulWidget {
   final Function addItm;
@@ -13,100 +14,200 @@ class NewInventory extends StatefulWidget {
 class _NewInventoryState extends State<NewInventory> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime _selectedDate;
+  final _categoryController = TextEditingController();
+  final _measurementController = TextEditingController();
+  final _totalSoldController = TextEditingController();
+  final _quantityController = TextEditingController();
 
   void _submitData() {
     if (_amountController.text.isEmpty) {
       return;
     }
     final enteredTitle = _titleController.text;
-    final enteredAmount = double.parse(_amountController.text);
+    final enteredAmount = _amountController.text;
+    final enteredCategory = _categoryController.text;
+    final enteredMeasurement = _measurementController.text;
+    final enteredTotalSold = _totalSoldController.text;
+    final enteredQuantity = _quantityController.text;
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+    if (enteredTitle.isEmpty || enteredAmount.isEmpty || enteredCategory.isEmpty || enteredMeasurement.isEmpty || enteredTotalSold.isEmpty || enteredQuantity.isEmpty) {
       return;
     }
 
     widget.addItm(
       enteredTitle,
       enteredAmount,
-      _selectedDate,
+      enteredCategory,
+      enteredMeasurement,
+      enteredTotalSold,
+      enteredQuantity,
     );
 
     Navigator.of(context).pop();
   }
 
-  void _presentDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
-    print('...');
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _titleController,
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (val) {
-              //   titleInput = val;
-              // },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (val) => amountInput = val,
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                          ? 'No Date Chosen!'
-                          : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
+    return SingleChildScrollView(
+      child: Card(
+        margin: EdgeInsets.all(10),
+        elevation: 5,
+        child: Container(
+          color: Color.fromRGBO(40, 73, 100, 1),
+          padding: EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
                     ),
                   ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Choose Date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
                     ),
-                    onPressed: _presentDatePicker,
                   ),
-                ],
+                ),
+                controller: _titleController,
+                onSubmitted: (_) => _submitData(),
               ),
-            ),
-            RaisedButton(
-              child: Text('Add Inventory'),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
-              onPressed: _submitData,
-            ),
-          ],
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Category',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                controller: _categoryController,
+                onSubmitted: (_) => _submitData(), 
+              ),
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Price',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),  
+              ),
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Quantity',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                controller: _quantityController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
+              ),
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Unit of Measurement',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                controller: _measurementController,
+                onSubmitted: (_) => _submitData(), 
+              ),
+              TextField(
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                ),
+                decoration: InputDecoration(
+                  labelText: 'Total Sold',
+                  labelStyle: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+                controller: _totalSoldController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(), 
+              ),
+              RaisedButton(
+                child: Text('Add Inventory'),
+                color: AppColors.secondaryElement,
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: _submitData,
+              ),
+            ],
+          ),
         ),
       ),
     );

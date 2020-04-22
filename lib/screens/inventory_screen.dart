@@ -1,48 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:scoutboard/color/colors.dart';
 import '../widgets/new_item.dart';
 import '../widgets/inventory_list.dart';
+import "../styles/style.dart";
 import '../models/transaction.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
-class Album{ // change this to parse what data you need
+class Album {
+  // change this to parse what data you need
 
   final int ID;
   Album({this.ID});
 
-  factory Album.fromJson(Map<String, dynamic> json){
-
+  factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
       ID: json['ID'],
     );
-
-
   }
 }
 
 Future<Album> createAlbum(String ID) async {
-
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
 
-      body:
-
-      {
+      body: {
         'ID': ID,
-      }
-
-  );
-
+      });
 
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
-    try{
+    try {
       return Album.fromJson(json.decode(response.body));
-    }catch(err) {
+    } catch (err) {
       print("Error in returning album");
       return null;
     }
@@ -64,36 +57,19 @@ class InventoryScreen extends StatefulWidget {
 class _InventoryScreenState extends State<InventoryScreen> {
   Future<Album> futureAlbum;
   final List<Item> _userInventory = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Weekly Groceries',
-    //   amount: 16.53,
-    //   date: DateTime.now(),
-    // ),
+
   ];
 
-  List<Item> get _recentInventory {
-    return _userInventory.where((tx) {
-      return tx.date.isAfter(
-        DateTime.now().subtract(
-          Duration(days: 7),
-        ),
-      );
-    }).toList();
-  }
+  
 
-  void _addNewInventory(
-      String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewInventory(String itmTitle, String itmAmount, String itmCategory, String itmMeasurement, String itmQuantity, String itmTotalSold) {
     final newItm = Item(
-      title: txTitle,
-      amount: txAmount,
-      date: chosenDate,
+      title: itmTitle,
+      amount: itmAmount,
+      category: itmCategory,
+      measurement: itmMeasurement,
+      quantity: itmQuantity,
+      totalSold: itmTotalSold,
       id: DateTime.now().toString(),
     );
 
@@ -104,6 +80,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
 
   void _startAddNewInventory(BuildContext ctx) {
     showModalBottomSheet(
+      backgroundColor: Color.fromRGBO(255, 0, 0, 0.0),
+      isScrollControlled: true,
       context: ctx,
       builder: (_) {
         return GestureDetector(
@@ -125,6 +103,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
           'Inventory',
         ),
@@ -136,13 +115,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-          
-            InventoryList(_userInventory, _deleteInventory),
-          ],
+        child: Container(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              InventoryList(_userInventory, _deleteInventory),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
