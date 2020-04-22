@@ -18,22 +18,19 @@ class Album{ // change this to parse what data you need
     return Album(
       ID: json['ID'],
     );
-
-
   }
 }
 
 Future<Album> createAlbum(String ID) async {
 
   // trying to connect to database here
-  ID = '25275';
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/overview', // change this to what page you are requesting data from
 
       body:
 
       {
-        'ID': ID,
+        'ScoutID': ID,
       }
 
   );
@@ -76,7 +73,7 @@ class DashboardScreen extends StatelessWidget {
 
     });
     return Scaffold(
-
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         elevation: 0,
         title: const Text('Dashboard'),

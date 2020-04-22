@@ -1,9 +1,59 @@
 import 'package:flutter/material.dart';
 import '../values/values.dart';
 import './login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+
+
+Future createAlbum(String firstName, String lastName, String dob, String email, String password) async {
+
+  final http.Response response = await http.post(
+      'https://capstoneproject-271322.appspot.com/signup',
+
+      body:
+
+      {
+        'FirstName':firstName,
+        'LastName':lastName,
+        'DOB': dob,
+        'Email': email,
+        'Password': password,
+      }
+
+  );
+
+  print(response.body);
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+    return response.body;
+
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
 
 class RegistrationScreen extends StatelessWidget {
   static const routeName = '/registration-screen';
+  String firstName;
+  String lastName;
+  String dob;
+  String email;
+  String password;
+  String passwordConfirm;
+
+  String message;
+
+  final myControllerF = TextEditingController(); // controller for firstname
+  final myControllerL = TextEditingController(); // controller for lastname
+  final myControllerD = TextEditingController(); // controller for date of birth
+  final myControllerE = TextEditingController(); // controller for email
+  final myControllerP = TextEditingController(); // controller for password
+  final myControllerPC = TextEditingController(); // controller for password confirm
+
    void onRectangle14Pressed(BuildContext context) => Navigator.of(context).pushNamed(LoginScreen.routeName);
   
   void onBackwardArrowPressed(BuildContext context) => Navigator.of(context).pushNamed(LoginScreen.routeName);
@@ -79,13 +129,12 @@ class RegistrationScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
                       width: 80,
                       height: 18,
-                      margin: EdgeInsets.only(left: 47, top: 100),
+                      margin: EdgeInsets.only(left: 47, top: 75),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -104,7 +153,7 @@ class RegistrationScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Username",
+                              "First name",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: AppColors.primaryText,
@@ -118,7 +167,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
@@ -129,6 +178,7 @@ class RegistrationScreen extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                       child: TextField(
+                        controller: myControllerF,
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
@@ -140,7 +190,194 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      width: 80,
+                      height: 18,
+                      margin: EdgeInsets.only(left: 47, top: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: 14,
+                              height: 12,
+                              margin: EdgeInsets.only(top: 2),
+                              child: Image.asset(
+                                "assets/images/group-2-2.png",
+                                fit: BoxFit.none,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Last name",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryText,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: 320,
+                      height: 27,
+                      margin: EdgeInsets.only(top: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      child: TextField(
+                        controller: myControllerL,
+                        style: TextStyle(
+                          color: AppColors.primaryText,
+                          fontFamily: "Ubuntu",
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                        ),
+                        maxLines: 1,
+                        autocorrect: false,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      width: 250,
+                      height: 18,
+                      margin: EdgeInsets.only(left: 47, top: 20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: 14,
+                              height: 12,
+                              margin: EdgeInsets.only(top: 2),
+                              child: Image.asset(
+                                "assets/images/group-2-2.png",
+                                fit: BoxFit.none,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Date of Birth (MM/DD/YYYY)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryText,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: 320,
+                      height: 27,
+                      margin: EdgeInsets.only(top: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      child: TextField(
+                        controller: myControllerD,
+                        style: TextStyle(
+                          color: AppColors.primaryText,
+                          fontFamily: "Ubuntu",
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                        ),
+                        maxLines: 1,
+                        autocorrect: false,
+                      ),
+                    ),
+                  ),
+
+
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Container(
+                      width: 80,
+                      height: 18,
+                      margin: EdgeInsets.only(left: 47, top: 25),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: 14,
+                              height: 12,
+                              margin: EdgeInsets.only(top: 2, right: 2,),
+                              child: Image.asset(
+                                "assets/images/group-2-2.png",
+                                fit: BoxFit.none,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Email",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: AppColors.primaryText,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      width: 320,
+                      height: 27,
+                      margin: EdgeInsets.only(top: 3),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      child: TextField(
+                        controller: myControllerE,
+                        style: TextStyle(
+                          color: AppColors.primaryText,
+                          fontFamily: "Ubuntu",
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                        ),
+                        maxLines: 1,
+                        autocorrect: false,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5,),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
@@ -182,7 +419,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
@@ -194,6 +431,7 @@ class RegistrationScreen extends StatelessWidget {
 
                       ),
                       child: TextField(
+                        controller: myControllerP,
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
@@ -206,7 +444,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Container(
@@ -248,7 +486,7 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(height: 5,),
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
@@ -260,6 +498,7 @@ class RegistrationScreen extends StatelessWidget {
 
                       ),
                       child: TextField(
+                        controller: myControllerPC,
                         style: TextStyle(
                           color: AppColors.primaryText,
                           fontFamily: "Ubuntu",
@@ -277,7 +516,7 @@ class RegistrationScreen extends StatelessWidget {
             ),
             Positioned(
               left: 38,
-              top: 425,
+              top: 600,
               right: 38,
               bottom: 1,
               child: Column(
@@ -287,7 +526,105 @@ class RegistrationScreen extends StatelessWidget {
                     width: 300,
                     height: 42,
                     child: FlatButton(
-                      onPressed: () => this.onRectangle14Pressed(context),
+                      onPressed: () {
+
+                        firstName = myControllerF.text;
+                        lastName = myControllerL.text;
+                        dob = myControllerD.text;
+                        email = myControllerE.text;
+                        password = myControllerP.text;
+                        passwordConfirm = myControllerPC.text;
+
+                      if(firstName.isEmpty) {
+                        print('1');
+                        Fluttertoast.showToast(
+                          msg: 'Please enter your first name',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                        }
+                        else if(lastName.isEmpty) {
+                          Fluttertoast.showToast(
+                          msg: 'Please enter your last name',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                        }
+                      else if(dob.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: 'Please enter your date of birth',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }
+                      else if(email.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: 'Please enter your email',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }
+                      else if(password.isEmpty) {
+                        Fluttertoast.showToast(
+                          msg: 'Please enter a password',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }
+                      else if(password != passwordConfirm){
+                        Fluttertoast.showToast(
+                          msg: 'Passwords do not match!',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }
+                      else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
+                        Fluttertoast.showToast(
+                          msg: 'Invalid Email',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }else {
+
+                        createAlbum(firstName, lastName, dob, email, password).then((message) {
+                          print(message);
+                          this.onRectangle14Pressed(context);
+                        }
+                        ).catchError((e){
+                          Fluttertoast.showToast(
+                            msg: 'Error in registration',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.TOP,
+                            timeInSecForIos: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                          );
+                        });
+
+                      }
+
+                      },
                       color: AppColors.secondaryElement,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
