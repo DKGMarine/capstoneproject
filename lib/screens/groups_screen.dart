@@ -53,21 +53,35 @@ Future<Album> createAlbum(String ID) async {
     throw Exception('Failed to load album');
   }
 }
-
+class Member {
+  final String name, age;
+  const Member(
+    {
+    this.name,
+    this.age,
+    }
+    
+  );
+}
 
 class GroupsScreen extends StatefulWidget{
   static const routeName = '/groups-screen';
   @override
-  State<StatefulWidget> createState() {
-    return GroupsScreenState();
-  }
+
+  GroupsScreenState createState() => new GroupsScreenState();
 
 }
 
 class GroupsScreenState extends State<GroupsScreen>{
+  var _nameController = new TextEditingController();
+  var _ageController1 = new TextEditingController();
   Future<Album> futureAlbum;
   List<String> item = [];
+  String temp;
   final TextEditingController eCtrl = new TextEditingController();
+
+
+ 
   @override
   Widget build(BuildContext context){
     createAlbum(global.userID).then((futureAlbum) {
@@ -75,53 +89,103 @@ class GroupsScreenState extends State<GroupsScreen>{
       print('1');
 
     });
-    return new Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('Groups'),
-      ),
-      body: new Column(
-        children: <Widget>[
-          new TextField(
+  void _modalPress(){
+    showModalBottomSheet(context: context, 
+    builder: (context){
+      return Column(
+        children:  <Widget>[
+          
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text('Name', style: TextStyle(fontSize: 20)),
+          ),
+          TextField(
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.add),
-              hintText: 'Enter Group Name',
+              hintText: 'Enter Members Name',
               filled:true,
 
             ),
-            controller: eCtrl,
-            onSubmitted: (text){
-              item.add(text);
-              eCtrl.clear();
-              setState(() {});
+            controller: _nameController,
+            onChanged: (text){
+              temp = text;
             },
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text('Age',style: TextStyle(fontSize: 20)),
+          ),
+         TextField(
+              decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(),
+              hintText: 'Enter Members Age',
+              filled:true,
+
+            ),
+            controller: _ageController1,
+         ),
+          
+         new RaisedButton(
+           child: Text('Add Member'),
+           onPressed: (){
+             
+             setState(() {
+              item.add(temp);
+               //_nameController.clear();
+             });
+
+             Navigator.pop(context);
+           },
+         )
+        ],
+
+      );
+      
+    });
+  } 
+    return new Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('Members'),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.add), 
+            onPressed: () => _modalPress(),
+            
+          )
+        ],
+      ),
+      body: new Column(
+        children: <Widget>[
+          
           new Expanded(
             child: new ListView.builder(
               itemCount: item.length,
               itemBuilder: (BuildContext ctxt, int index){
                 return new Card(
+                  color: Colors.blue[100],
                   child: ListTile(
                     title: Text(item[index]),
                     onTap: (){
-                      Navigator.push(
-                        ctxt,
-                        MaterialPageRoute(builder: (ctxt) => GroupdetailWidget(index))
-                      );
+                      var route = new MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                          new GroupdetailWidget(
+                            value: Member(
+                              name: _nameController.text,
+                              age: _ageController1.text,
+                            )
+                          )
+                        );
+                        Navigator.of(context).push(route);
                     },
                   ),
                   
-                );
-                
+                ); 
               }
-              
               )
             )
         ],
-
       )
-
     );
 
   }
