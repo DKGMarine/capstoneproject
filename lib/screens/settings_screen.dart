@@ -59,7 +59,9 @@ Future<Album> createAlbum(String ID) async {
   Future<Album> futureAlbum;
   void onAboutPressed(BuildContext context) { }
   
-  void onLogoutPressed(BuildContext context) { }
+  void onLogoutPressed(BuildContext context) {
+    Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.routeName, (Route<dynamic> route) => false);
+   }
 
   @override
   Widget build(BuildContext context) {
