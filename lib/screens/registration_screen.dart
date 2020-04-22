@@ -566,6 +566,17 @@ class RegistrationScreen extends StatelessWidget {
                           textColor: Colors.white,
                         );
                       }
+                      else if(!RegExp(r"^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$").hasMatch(dob)){
+
+                        Fluttertoast.showToast(
+                          msg: 'Please enter a formatted date of birth',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIos: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                        );
+                      }
                       else if(email.isEmpty) {
                         Fluttertoast.showToast(
                           msg: 'Please enter your email',

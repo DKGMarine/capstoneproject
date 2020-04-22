@@ -25,10 +25,9 @@ Future<Album> createAlbum(String ID) async {
 
   // trying to connect to database here
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/overview', // change this to what page you are requesting data from
+      'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
 
       body:
-
       {
         'ScoutID': ID,
       }
@@ -39,6 +38,7 @@ Future<Album> createAlbum(String ID) async {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
+    print('1');
     print(json.decode(response.body));
     try{
 
