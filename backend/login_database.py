@@ -46,17 +46,17 @@ def signup_email_validation(email):
 
 def signup_data_duplicate_check(email):
     doc_ref = db.collection(u'users')
-    query_ref = doc_ref.where(u'email', u'==', email).stream()
+    query_ref = doc_ref.where(u'Email', u'==', str(email)).stream()
 
     return_value = []
 
     for doc in query_ref:
-        return_value = doc.to_dict()
+        return_value.append(doc.to_dict())
 
     if (len(return_value) == 0):
-        return True
+        return False
 
-    return False
+    return True
 
 def login_data_validation(username, password):
     if (username == "" or password == ""):
@@ -96,8 +96,9 @@ class loginDatabase:
     def signup_function(self, password, email, DOB, FirstName, LastName):
         doc_ref = db.collection(u'users').document()
 
-        if signup_data_duplicate_check(email):
-            return "Error Code 10 Email"
+        print(signup_data_duplicate_check(email))
+        if (signup_data_duplicate_check(email)):
+            return "Error Code 10 Email Duplicate"
 
         if signup_email_validation(str(email)):
             return "Enter a correct Email Format"
@@ -114,23 +115,24 @@ class loginDatabase:
             u'scoutID' : doc_ref.id
         }
 
-        #temp = doc_ref.id
-
         doc_ref.set(data)
-        #self.create_overview(doc_ref.id)
 
-        #doc_ref = db.collection(u'Overview').document()
-
-        #data = {
-        #    u'ScoutID': temp
-        #}
-
+        self.create_overview(doc_ref.id)
 
         return "Success"
 
     def create_overview(self, token):
+        doc_ref = db.collection(u'overview').document()
 
-        return None
+        data = {
+            u'NumberOfFundraiser' : '15',
+            u'PercentageOfSold' : '100',
+            u'UpcomingFundraiser' : 'FundName',
+            u'ScoutID'   : str(token)
+        }
+
+        doc_ref.set(data)
+        return "Success"
 
     def overview(self, token):
 
@@ -175,7 +177,7 @@ class loginDatabase:
         return json.dumps(data)
 
     #Done
-    def addFundraiserGroup(self, MoneyRaised, Name, Number_of_teams, Start_Date, TargetGoal, ScoutID):
+    def addFundraiserGroup(self, MoneyRaised, Name, Number_of_teams, StartDate, EndDate, TargetGoal, ScoutID, Location, Time):
 
         if request.method == 'GET':
             return "Access Denied"
@@ -191,7 +193,7 @@ class loginDatabase:
             u'MoneyRaised' : MoneyRaised,
             u'TargetGoal' : TargetGoal,
             u'fundraiserID' : doc_ref.id,
-            u'ScoutID' : ScountID
+            u'ScoutID' : ScoutID
         }
 
         doc_ref.set(data)
@@ -202,13 +204,18 @@ class loginDatabase:
     #See how to Delete Data
     def inventory_delete(self, Name, ScoutID):
         doc_ref = db.collection(u'inventory').where(u'Name', u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).stream()
-        print("Hey")
-        for i in doc_ref:
-            print(i.to_dict())
+        for doc in doc_ref:
+            doc.reference.delete()
 
+        return "Success"
 
+    def delete_fundraiser(self, fundraiserID):
+        doc_ref = db.collection(u'fundraiser').where(u'fundraiserID', u'==', str(fundraiserID)).stream()
+        for doc in doc_ref:
+            doc.reference.delete()
 
-        return "HEEEEY"
+        return "Success"
+
 
     def inventory_adding(self, Name, Price, Stock, Sold, Category, Type_of_M, ScoutID):
 
@@ -218,13 +225,13 @@ class loginDatabase:
         doc_ref = db.collection(u'inventory').document()
 
         data = {
-            u'Name' : Name,
-            u'Price': Price,
-            u'Stock': Stock,
-            u'Sold' : Sold,
-            u'Category' : Category,
-            u'Measurement' : Type_of_M,
-            u'ScoutID' : ScoutID
+            u'Name' : str(Name),
+            u'Price': str(Price),
+            u'Stock': str(Stock),
+            u'Sold' : str(Sold),
+            u'Category' : str(Category),
+            u'Measurement' : str(Type_of_M),
+            u'ScoutID' : str(ScoutID)
         }
 
         doc_ref.set(data)
@@ -245,10 +252,18 @@ class loginDatabase:
 
         return json.dumps(data)
 
-    def Modify_inventory():
+    def Modify_inventory(self, Name, ScoutID, NameUpdate, PriceUpdate, StockUpdate, SoldUpdate, CategoryUpdate, MeasureUpdate):
         doc_ref = db.collection(u'inventory').where(u'Name',u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).document()
+        doc_ref.update({
+            u'Name' : str(NameUpdated),
+            u'Price' : str(PriceUpdate),
+            u'Stock' : str(SockUpdate),
+            u'Sold'  : str(SoldUpdate),
+            u'Category' : str(CategoryUpdate),
+            u'Measurement' : str(MeasureUpdate)
+        })
 
-        return None
+        return "Success"
 
     #Done
     def teamsWithNoFundraiser(self):
@@ -295,15 +310,18 @@ class loginDatabase:
 
         return json.dumps(data)
     #Done
-    def teamMembers(self, teamUniqueID):
+    def addScoutMembers(self, FirstName, LastName, NumberOfSales, Rank, ScoutID):
 
-        doc_ref = db.collection(u'TeamMember')
-        query_ref = doc_ref.where(u'TeamUniqueID',u'==',"teamUniqueID").stream()
+        doc_ref = db.collection(u'ScoutMembers').document()
 
-        data = []
-        for docs in query_ref:
-            data.append(docs.to_dict())
-        if (len(data) == 0):
-            return "Error Code 10"
+        data = {
+            u'FirstName' : str(FirstName),
+            u'LastName'  : str(LastName),
+            u'NumberOfSales' : str(NumberOfSales),
+            u'Rank' : str(Rank),
+            u'ScoutID' : ScoutID
+        }
 
-        return json.dumps(data)
+
+        doc_ref.set(data)
+        return "Success"

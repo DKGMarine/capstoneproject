@@ -9,8 +9,6 @@ def main_index():
     if request.method == 'GET':
         return "Access Denied"
 
-    username = request.form.get('username')
-    password = request.form.get('password')
     teamID = request.form.get('UniqueID')
     object = login_database.loginDatabase()
-    return object.teamMembers("Temp")
+    return object.teamMembers(teamID)

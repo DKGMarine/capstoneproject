@@ -9,5 +9,6 @@ def main_index():
         return "Access Denied"
 
     token    = request.args.get('ID')
+    print(token)
     object = login_database.loginDatabase()
     return object.overview(token)

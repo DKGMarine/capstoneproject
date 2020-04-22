@@ -10,4 +10,4 @@ def main_index():
         return "Access Denied"
 
     object = login_database.loginDatabase()
-    return object.teamsWithNoFundraiser("token")
+    return object.teamsWithNoFundraiser()
