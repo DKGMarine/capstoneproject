@@ -1,14 +1,14 @@
 from flask import Flask, Blueprint, request
 import login_database
 
-overview = Blueprint('overview', __name__)
+members = Blueprint('members', __name__)
 
-@overview.route('/overview', methods = ['POST', 'GET'])
+@members.route('/members', methods = ['POST', 'GET'])
 def main_index():
+
     if request.method == 'GET':
         return "Access Denied"
 
-    token    = request.form.get('ScoutID')
-    print(token)
+    teamID = request.form.get('ScoutID')
     object = login_database.loginDatabase()
-    return object.overview(token)
+    return object.members(teamID)

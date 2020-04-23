@@ -71,14 +71,14 @@ class loginDatabase:
 
     #Error Code: 10 for user Not Found
     #Error Code: 11 is for bad login information
-    def login_function(self, username, password):
+    def login_function(self, Email, password):
 
 
-        if (login_data_validation(username,password) == False):
+        if (login_data_validation(Email,password) == False):
             return "Error Code 11"
 
         doc_ref = db.collection(u'users')
-        query_ref = doc_ref.where(u'username',u'==',username).where(u'password', u'==', password).stream()
+        query_ref = doc_ref.where(u'Email',u'==',Email).where(u'Password', u'==', password).stream()
 
 
         data = []
@@ -136,7 +136,7 @@ class loginDatabase:
 
     def overview(self, token):
 
-        doc_ref = db.collection(u'Overview')
+        doc_ref = db.collection(u'overview')
         query_ref = doc_ref.where(u'ScoutID',u'==',str(token)).stream()
 
         data = []
@@ -203,7 +203,7 @@ class loginDatabase:
 
     #See how to Delete Data
     def inventory_delete(self, Name, ScoutID):
-        doc_ref = db.collection(u'inventory').where(u'Name', u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).stream()
+        doc_ref = db.collection(u'Inventory').where(u'Name', u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).stream()
         for doc in doc_ref:
             doc.reference.delete()
 
@@ -222,7 +222,7 @@ class loginDatabase:
         if request.method == 'GET':
             return "Access Denied"
 
-        doc_ref = db.collection(u'inventory').document()
+        doc_ref = db.collection(u'Inventory').document()
 
         data = {
             u'Name' : str(Name),
@@ -239,7 +239,7 @@ class loginDatabase:
         return "Success"
 
     def getting_inventory(self, ScoutID):
-        doc_ref = db.collection(u'inventory')
+        doc_ref = db.collection(u'Inventory')
         query_ref = doc_ref.where(u'ScoutID',u'==',str(ScoutID)).stream()
 
         data = []
@@ -253,11 +253,11 @@ class loginDatabase:
         return json.dumps(data)
 
     def Modify_inventory(self, Name, ScoutID, NameUpdate, PriceUpdate, StockUpdate, SoldUpdate, CategoryUpdate, MeasureUpdate):
-        doc_ref = db.collection(u'inventory').where(u'Name',u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).document()
+        doc_ref = db.collection(u'Inventory').where(u'Name',u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).document()
         doc_ref.update({
-            u'Name' : str(NameUpdated),
+            u'Name' : str(NameUpdate),
             u'Price' : str(PriceUpdate),
-            u'Stock' : str(SockUpdate),
+            u'Stock' : str(StockUpdate),
             u'Sold'  : str(SoldUpdate),
             u'Category' : str(CategoryUpdate),
             u'Measurement' : str(MeasureUpdate)
@@ -282,9 +282,9 @@ class loginDatabase:
 
     #Finish Route
     #DONE
-    def teamMembers(self, teamID):
-        doc_ref = db.collection(u'TeamMember')
-        query_ref = doc_ref.where(u'TeamID',u'==',str(teamID)).stream()
+    def members(self, ScoutID):
+        doc_ref = db.collection(u'member')
+        query_ref = doc_ref.where(u'ScoutID',u'==',str(ScoutID)).stream()
 
         data = []
         for docs in query_ref:
@@ -309,10 +309,11 @@ class loginDatabase:
             return "Error Code 10"
 
         return json.dumps(data)
+
     #Done
     def addScoutMembers(self, FirstName, LastName, NumberOfSales, Rank, ScoutID):
 
-        doc_ref = db.collection(u'ScoutMembers').document()
+        doc_ref = db.collection(u'member').document()
 
         data = {
             u'FirstName' : str(FirstName),

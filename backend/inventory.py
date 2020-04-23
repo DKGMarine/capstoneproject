@@ -9,12 +9,6 @@ def main_index():
     if request.method == 'GET':
         return "Access Denied"
 
-    Name = request.form.get('Name')
-    Price = request.form.get('Price')
-    Stock = request.form.get('Stock')
-    Sold = request.form.get('Sold')
-    Category = request.form.get('Category')
-    Measurement = request.form.get('Measurement')
     ScoutID = request.form.get('ScoutID')
     object = login_database.loginDatabase()
-    return object.inventory_adding(Name, Price, Stock, Sold, Category, Measurement, ScoutID)
+    return object.getting_inventory(ScoutID)
