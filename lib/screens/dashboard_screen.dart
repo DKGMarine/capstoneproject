@@ -10,21 +10,35 @@ import 'dart:convert';
 
 class Album{ // change this to parse what data you need
 
-  final int ID;
-  Album({this.ID});
+  final String Name;
+  final String Stock;
+  final String Sold;
+  final String Category;
+  final String Price;
+  final String Measurement;
+  Album({this.Name, this.Stock, this.Sold, this.Category, this.Price, this.Measurement});
 
   factory Album.fromJson(Map<String, dynamic> json){
 
     return Album(
-      ID: json['ID'],
+      Name: json['Name'],
+      Stock: json['Stock'],
+      Sold: json['Sold'],
+      Category: json['Category'],
+      Price: json['Price'],
+      Measurement: json['Measurement'],
     );
   }
 }
 
-Future<Album> createAlbum(String ID) async {
+List<Album> parseAlbums(String responseBody){
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
-  ID = "25275";
+  return parsed.map<Album>((json) => Album.fromJson(json)).toList();
+}
+Future<List<Album>> createAlbum(String ID) async {
 
+  ID = '25275';
   // trying to connect to database here
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
@@ -43,8 +57,7 @@ Future<Album> createAlbum(String ID) async {
     print('1');
     print(json.decode(response.body));
     try{
-
-      return Album.fromJson(json.decode(response.body));
+      return parseAlbums(response.body);
     }catch(err){
       print("Error in returning album");
       return null;
@@ -59,9 +72,10 @@ Future<Album> createAlbum(String ID) async {
 
 
 class DashboardScreen extends StatelessWidget {
-  Future<Album> futureAlbum;
+  Future<List<Album>> futureAlbum;
   static const routeName = '/dashboard-screen';
-
+  int minimum = 0;
+  int index = 0;
   @override
   Widget build(BuildContext context) {
 
@@ -71,7 +85,16 @@ class DashboardScreen extends StatelessWidget {
 
     createAlbum(global.userID).then((futureAlbum) {
 
-    print(futureAlbum.ID);
+      minimum = int.parse(futureAlbum[0].Stock);
+      for(int i = 1; i < futureAlbum.length; i++){
+
+          if(int.parse(futureAlbum[i].Stock) < minimum) {
+            index = i;
+            minimum = int.parse(futureAlbum[i].Stock);
+          }
+
+      }
+      print(futureAlbum[index].Name);
 
     });
     return Scaffold(
