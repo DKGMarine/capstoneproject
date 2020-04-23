@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scoutboard/color/colors.dart';
 import '../widgets/new_item.dart';
 import '../widgets/inventory_list.dart';
-import "../styles/style.dart";
 import '../models/transaction.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
@@ -42,14 +40,25 @@ Page: 'inventory'
 class Album {
   // change this to parse what data you need
 
-  final String Name;
-  final String Price;
-  Album({this.Name,this.Price});
+  final String name;
+  final String price;
+  final String stock;
+  final String sold;
+  final String category;
+  final String typeOfM;
+  final String scoutID;
+
+  Album({this.name,this.price,this.stock,this.sold,this.category,this.typeOfM,this.scoutID});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      Name: json['Name'],
-      Price: json['Price'],
+      name: json['Name'],
+      price: json['Price'],
+      stock: json['Stock'],
+      sold: json['Sold'],
+      category: json['Category'],
+      typeOfM: json['Type_of_M'],
+      scoutID: json['ScoutID'],
     );
   }
 }
