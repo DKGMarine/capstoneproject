@@ -8,25 +8,58 @@ import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/*
+ADDING:
+
+Page: 'addinventory'
+
+'Name':
+'Price':
+'Stock':
+'Sold':
+'Category':
+'Type_of_M':
+'ScoutID':
+ */
+
+/*
+DELETING:
+
+Page: 'inventoryDelete'
+
+'Name':
+'ID':
+ */
+
+/*
+RETURNING INVENTORY:
+
+Page: 'inventory'
+
+'ScoutID':
+*/
+
 class Album {
   // change this to parse what data you need
 
-  final int ID;
-  Album({this.ID});
+  final String Name;
+  final String Price;
+  Album({this.Name,this.Price});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      ID: json['ID'],
+      Name: json['Name'],
+      Price: json['Price'],
     );
   }
 }
 
 Future<Album> createAlbum(String ID) async {
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
+      'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
 
       body: {
-        'ID': ID,
+        'ID': global.userID,
       });
 
   if (response.statusCode == 200) {
@@ -59,8 +92,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
   final List<Item> _userInventory = [
 
   ];
-
-  
 
   void _addNewInventory(String itmTitle, String itmAmount, String itmCategory, String itmMeasurement, String itmQuantity, String itmTotalSold) {
     final newItm = Item(

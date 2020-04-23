@@ -5,6 +5,38 @@ import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/*
+RETRIEVING FUNDRAISER GROUPS/TEAMS
+
+Page: '/fundraiserGroups'
+
+'ID':
+*/
+
+/*
+ADDING FUNDRAISER GROUPS/TEAMS
+
+Page: '/addFundraiserGroup'
+
+'ScoutID': "24678",
+'MoneyRaised': "0",
+'Name': "Weston",
+'NumberOfTeams': "50", // !!number of teams is temporary!!
+'StartDate': "10/02/1990",
+'EndDate': "Never",
+'TargetGoal': "50",
+'Location': "Walmart",
+'Time': "12:00AM"
+
+*/
+
+/*
+DELETING FUNDRAISER GROUPS/TEAMS
+
+Page: '/deletefundraiser'
+
+'ID':
+*/
 
 class Album{ // change this to parse what data you need
 

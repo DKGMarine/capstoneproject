@@ -4,6 +4,27 @@ import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/*
+RETRIEVING MEMBERS:
+
+Page: '/members'
+
+'ScoutID':
+*/
+
+/*
+ADDING SCOUT MEMBER:
+
+Page: '/addScoutMembers'
+
+'FirstName':
+'LastName':
+'NumberOfSales':
+'Rank':
+'ScoutID':
+
+*/
+
 
 class Album{ // change this to parse what data you need
 

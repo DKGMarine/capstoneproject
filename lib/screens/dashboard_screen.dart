@@ -23,6 +23,8 @@ class Album{ // change this to parse what data you need
 
 Future<Album> createAlbum(String ID) async {
 
+  ID = "25275";
+
   // trying to connect to database here
   final http.Response response = await http.post(
       'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
@@ -69,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
 
     createAlbum(global.userID).then((futureAlbum) {
 
-    print('1');
+    print(futureAlbum.ID);
 
     });
     return Scaffold(
