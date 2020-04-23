@@ -30,7 +30,12 @@ class _NewInventoryState extends State<NewInventory> {
     final enteredTotalSold = _totalSoldController.text;
     final enteredQuantity = _quantityController.text;
 
-    if (enteredTitle.isEmpty || enteredAmount.isEmpty || enteredCategory.isEmpty || enteredMeasurement.isEmpty || enteredTotalSold.isEmpty || enteredQuantity.isEmpty) {
+    if (enteredTitle.isEmpty ||
+        enteredAmount.isEmpty ||
+        enteredCategory.isEmpty ||
+        enteredMeasurement.isEmpty ||
+        enteredTotalSold.isEmpty ||
+        enteredQuantity.isEmpty) {
       return;
     }
 
@@ -46,167 +51,174 @@ class _NewInventoryState extends State<NewInventory> {
     Navigator.of(context).pop();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
       child: Card(
         margin: EdgeInsets.all(10),
         elevation: 5,
         child: Container(
           color: Color.fromRGBO(40, 73, 100, 1),
           padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  labelStyle: TextStyle(
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
+                  controller: _titleController,
                 ),
-                controller: _titleController,
-                
-              ),
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Category',
-                  labelStyle: TextStyle(
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Category',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
+                  controller: _categoryController,
                 ),
-                controller: _categoryController,
-                 
-              ),
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                  labelStyle: TextStyle(
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Price',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
                 ),
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                  
-              ),
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Quantity',
-                  labelStyle: TextStyle(
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Quantity',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
+                  controller: _quantityController,
+                  keyboardType: TextInputType.number,
                 ),
-                controller: _quantityController,
-                keyboardType: TextInputType.number,
-                
-              ),
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Unit of Measurement',
-                  labelStyle: TextStyle(
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Unit of Measurement',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
+                  controller: _measurementController,
                 ),
-                controller: _measurementController,
-                 
-              ),
-              TextField(
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                ),
-                decoration: InputDecoration(
-                  labelText: 'Total Sold',
-                  labelStyle: TextStyle(
+                TextField(
+                  style: TextStyle(
                     color: AppColors.primaryText,
                   ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
+                  decoration: InputDecoration(
+                    labelText: 'Total Sold',
+                    labelStyle: TextStyle(
                       color: AppColors.primaryText,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
                     ),
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.primaryText,
+                  controller: _totalSoldController,
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(height: 75),
+                ButtonTheme(
+                  minWidth: 150.0,
+                  height: 50.0,
+                  child: RaisedButton(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(40.0),
                     ),
+                    child: Text('Add Inventory'),
+                    color: AppColors.secondaryElement,
+                    textColor: Theme.of(context).textTheme.button.color,
+                    onPressed: _submitData,
                   ),
                 ),
-                controller: _totalSoldController,
-                keyboardType: TextInputType.number,
-                 
-              ),
-              RaisedButton(
-                child: Text('Add Inventory'),
-                color: AppColors.secondaryElement,
-                textColor: Theme.of(context).textTheme.button.color,
-                onPressed: _submitData,
-              ),
-            ],
+                SizedBox(height: 100),
+              ],
+            ),
           ),
         ),
       ),
