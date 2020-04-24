@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 import 'package:scoutboard/widgets/globals.dart' as global;
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
+
 class Album{ // change this to parse what data you need
 
    String Name;
@@ -168,7 +172,8 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
   Timer timer;
   DashboardScreen() {
-    createAlbum2(global.userID).then((futureAlbum2) {
+    const oneSecond = const Duration(seconds: 2);
+    new Timer.periodic(oneSecond, (Timer T) => createAlbum2(global.userID).then((futureAlbum2) {
 
       MoneyRaised = futureAlbum2.MoneyRaised;
       Name = futureAlbum2.Name;
@@ -177,16 +182,11 @@ class DashboardScreen extends State<StatefulWidgetReg> {
       TargetGoal = futureAlbum2.TargetGoal;
       Location = futureAlbum2.Location;
       Time = futureAlbum2.Time;
-
-      print('1');
-      print(MoneyRaised);
-
     }
     ).catchError((e){
-
       print("Error in getting closest event");
-    });
-    const oneSecond = const Duration(seconds: 2);
+    }));
+
     new Timer.periodic(oneSecond, (Timer T) => createAlbum(global.userID).then((futureAlbum) => setState((){
 
       futureAlbum.sort((a,b) => a.Stock.compareTo(b.Stock));
@@ -235,7 +235,6 @@ class DashboardScreen extends State<StatefulWidgetReg> {
         }
       }
 
-      futureAlbum[0].Name = "l";
     })));
   }
 
@@ -337,7 +336,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                           children: [
                             Container(
                               width: 314,
-                              height: 180,
+                              height: 200,
                               child: Stack(
                                 children: [
                                   Positioned(
@@ -360,53 +359,38 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "Net Gain",
+                                            "Goal",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.accentText,
                                               fontFamily: "Source Sans Pro",
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 15,
+                                              fontSize: 16,
                                             ),
                                           ),
                                         ),
                                         Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            width: 47,
-                                            height: 47,
-                                            margin: EdgeInsets.only(left: 104, top: 17),
-                                            child: Image.asset(
-                                              "assets/images/backward-arrow-2.png",
-                                              fit: BoxFit.none,
-                                            ),
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            width: 267,
-                                            height: 9,
-                                            margin: EdgeInsets.only(left: 2),
-                                            child: Image.asset(
-                                              "assets/images/path-3149.png",
-                                              fit: BoxFit.cover,
-                                            ),
+                                          alignment: Alignment.center,
+                                          child: new CircularPercentIndicator(
+                                            radius: 103.0,
+                                            lineWidth: 10.0,
+                                            percent: (double.parse(MoneyRaised) / double.parse(TargetGoal)),
+                                            center: new Text((((double.parse(MoneyRaised) / double.parse(TargetGoal)) * 100.0).toString() + '%'), style: TextStyle(fontSize: 22),),
+                                            backgroundColor: Colors.blueGrey,
+                                            progressColor: Colors.green,
                                           ),
                                         ),
                                         Container(
-                                          height: 28,
-                                          margin: EdgeInsets.only(left: 7, right: 3),
+                                          height: 35,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Align(
                                                 alignment: Alignment.bottomLeft,
                                                 child: Container(
-                                                  margin: EdgeInsets.only(bottom: 7),
+                                                  margin: EdgeInsets.only(bottom: 10),
                                                   child: Text(
-                                                    "\$3671",
+                                                    '\$' + MoneyRaised,
                                                     textAlign: TextAlign.left,
                                                     style: TextStyle(
                                                       color: Color.fromARGB(255, 208, 219, 233),
@@ -423,7 +407,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                                 child: Container(
                                                   margin: EdgeInsets.only(bottom: 7),
                                                   child: Text(
-                                                    "Goal",
+                                                   '\$' + TargetGoal,
                                                     textAlign: TextAlign.right,
                                                     style: TextStyle(
                                                       color: Color.fromARGB(255, 208, 219, 233),
@@ -440,14 +424,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                       ],
                                     ),
                                   ),
-                                  Positioned(
-                                    left: 21,
-                                    bottom: 29,
-                                    child: Image.asset(
-                                      "assets/images/path-3150.png",
-                                      fit: BoxFit.none,
-                                    ),
-                                  ),
+
                                 ],
                               ),
                             ),
@@ -475,7 +452,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                     ),
                                   ),
                                   Container(
-                                    width: 150,
+                                    width: 250,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19, top: 12),
                                     child: Row(
@@ -661,7 +638,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                   ),
                                   Spacer(),
                                   Container(
-                                    width: 240,
+                                    width: 250,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 18),
                                     child: Row(
@@ -700,7 +677,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                     ),
                                   ),
                                   Container(
-                                    width: 200,
+                                    width: 250,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 18,),
                                     child: Row(
