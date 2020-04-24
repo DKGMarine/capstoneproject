@@ -167,7 +167,7 @@ class GroupsScreenState extends State<GroupsScreen>{
     return new Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Members'),
+        title: Text('Scouts'),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.add), 

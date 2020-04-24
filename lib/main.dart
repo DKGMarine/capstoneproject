@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scoutboard/screens/sales_screen.dart';
 import './screens/calendar_screen.dart';
 import './screens/events_screen.dart';
 import './screens/groups_screen.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => LoginScreen(),
        StatefulWidgetReg.routeName: (ctx) => StatefulWidgetReg(),
        LoginScreen.routeName: (ctx) => LoginScreen(),
+       SalesScreen.routeName: (ctx) => SalesScreen(),
        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
        GroupsScreen.routeName: (ctx) => GroupsScreen(),
        EventScreen.routeName: (ctx) => EventScreen(),
