@@ -6,28 +6,91 @@ import 'package:intl/intl.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-
+import 'dart:async';
+import 'package:scoutboard/widgets/globals.dart' as global;
 class Album{ // change this to parse what data you need
 
-  final String Name;
-  final String Stock;
-  final String Sold;
-  final String Category;
-  final String Price;
-  final String Measurement;
+   String Name;
+   String Stock;
+   String Sold;
+   String Category;
+   String Price;
+   String Measurement;
   Album({this.Name, this.Stock, this.Sold, this.Category, this.Price, this.Measurement});
 
   factory Album.fromJson(Map<String, dynamic> json){
 
     return Album(
+
       Name: json['Name'],
       Stock: json['Stock'],
       Sold: json['Sold'],
       Category: json['Category'],
       Price: json['Price'],
       Measurement: json['Measurement'],
+
     );
+
+  }
+}
+
+
+class Album2{ // change this to parse what data you need
+
+  String MoneyRaised;
+  String Name;
+  String NumberOfTeams;
+  String StartDate;
+  String EndDate;
+  String TargetGoal;
+  String Location;
+  String Time;
+  String ID;
+  Album2({this.MoneyRaised, this.Name, this.NumberOfTeams, this.StartDate, this.EndDate, this.TargetGoal, this.Location, this.Time, this.ID});
+
+  factory Album2.fromJson(Map<String, dynamic> json){
+
+    return Album2(
+
+        MoneyRaised: json['MoneyRaised'],
+        Name: json['Name'],
+        NumberOfTeams: json['NumberOfTeams'],
+        StartDate: json['StartDate'],
+        EndDate: json['EndDate'],
+        TargetGoal: json['TargetGoal'],
+        Location: json['Location'],
+        Time: json['Time'],
+        ID: json['ID'],
+
+    );
+
+  }
+}
+
+Future<Album2> createAlbum2(String ID) async {
+
+  ID = '25275';
+  final http.Response response = await http.post(
+      'https://capstoneproject-271322.appspot.com/getting_closestEvent',
+
+      body:
+
+      {
+        'ScoutID': ID,
+      }
+
+  );
+
+  print(response.body);
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+    return Album2.fromJson(json.decode(response.body));
+
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
   }
 }
 
@@ -53,9 +116,6 @@ Future<List<Album>> createAlbum(String ID) async {
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
-
-    print('1');
-    print(json.decode(response.body));
     try{
       return parseAlbums(response.body);
     }catch(err){
@@ -69,34 +129,127 @@ Future<List<Album>> createAlbum(String ID) async {
   }
 }
 
-
-
-class DashboardScreen extends StatelessWidget {
-  Future<List<Album>> futureAlbum;
+class StatefulWidgetReg extends StatefulWidget {
   static const routeName = '/dashboard-screen';
-  int minimum = 0;
-  int index = 0;
+
+  StatefulWidgetReg({Key key}) : super(key: key);
+
+
+  @override
+  DashboardScreen createState(){
+
+    return DashboardScreen();
+
+  }
+}
+
+
+class DashboardScreen extends State<StatefulWidgetReg> {
+  Future<List<Album>> futureAlbum;
+  Future<List<Album>> futureAlbum2;
+  String Name1 = "";
+  String Name2 = "";
+  String Name3 = "";
+  String Measurement1 = "";
+  String Measurement2 = "";
+  String Measurement3 = "";
+  String Stock1 = "";
+  String Stock2 = "";
+  String Stock3 = "";
+
+  String MoneyRaised = "";
+  String Name = "";
+  String StartDate = "";
+  String EndDate = "";
+  String TargetGoal = "";
+  String Location = "";
+  String Time = "";
+
+
+  Timer timer;
+  DashboardScreen() {
+    createAlbum2(global.userID).then((futureAlbum2) {
+
+      MoneyRaised = futureAlbum2.MoneyRaised;
+      Name = futureAlbum2.Name;
+      StartDate = futureAlbum2.StartDate;
+      EndDate = futureAlbum2.EndDate;
+      TargetGoal = futureAlbum2.TargetGoal;
+      Location = futureAlbum2.Location;
+      Time = futureAlbum2.Time;
+
+      print('1');
+      print(MoneyRaised);
+
+    }
+    ).catchError((e){
+
+      print("Error in getting closest event");
+    });
+    const oneSecond = const Duration(seconds: 2);
+    new Timer.periodic(oneSecond, (Timer T) => createAlbum(global.userID).then((futureAlbum) => setState((){
+
+      futureAlbum.sort((a,b) => a.Stock.compareTo(b.Stock));
+
+       Name1 = "";
+       Name2 = "";
+       Name3 = "";
+       Measurement1 = "";
+       Measurement2 = "";
+       Measurement3 = "";
+       Stock1 = "";
+       Stock2 = "";
+       Stock3 = "";
+
+      if(futureAlbum.length >= 3) {
+        for (int i = 0; i < 3; i++) {
+          if(i == 0) {
+            Name1 = futureAlbum[i].Name;
+            Stock1 = futureAlbum[i].Stock;
+            Measurement1 = futureAlbum[i].Measurement;
+          }
+          else if(i == 1){
+            Name2 = futureAlbum[i].Name;
+            Stock2 = futureAlbum[i].Stock;
+            Measurement2 = futureAlbum[i].Measurement;
+          }
+          else if(i == 2){
+            Name3 = futureAlbum[i].Name;
+            Stock3 = futureAlbum[i].Stock;
+            Measurement3 = futureAlbum[i].Measurement;
+          }
+          }
+      }else{
+        for (int i = 0; i < futureAlbum.length; i++) {
+          if(i == 0){
+            Name1 = futureAlbum[i].Name;
+            Stock1 = futureAlbum[i].Stock;
+            Measurement1 = futureAlbum[i].Measurement;
+          }
+          else if(i == 1){
+
+            Name2 = futureAlbum[i].Name;
+            Stock2 = futureAlbum[i].Stock;
+            Measurement2 = futureAlbum[i].Measurement;
+          }
+        }
+      }
+
+      futureAlbum[0].Name = "l";
+    })));
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
 
     var now = new DateTime.now();
     var formatter = new DateFormat('MM/dd/yyyy');
     String formattedDate = formatter.format(now);
-
-    createAlbum(global.userID).then((futureAlbum) {
-
-      minimum = int.parse(futureAlbum[0].Stock);
-      for(int i = 1; i < futureAlbum.length; i++){
-
-          if(int.parse(futureAlbum[i].Stock) < minimum) {
-            index = i;
-            minimum = int.parse(futureAlbum[i].Stock);
-          }
-
-      }
-      print(futureAlbum[index].Name);
-
-    });
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -331,7 +484,7 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "Name",
+                                            "Name:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -346,7 +499,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 20),
                                             child: Text(
-                                              "Cookie table",
+                                              Name,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -360,8 +513,9 @@ class DashboardScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
+
                                   Container(
-                                    width: 74,
+                                    width: 180,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 19),
                                     child: Row(
@@ -370,85 +524,7 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            "Group",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: AppColors.primaryText,
-                                              fontFamily: "Source Sans Pro",
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 24),
-                                            child: Text(
-                                              "1",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: AppColors.primaryText,
-                                                fontFamily: "Source Sans Pro",
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 198,
-                                    height: 21,
-                                    margin: EdgeInsets.only(left: 19),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            "Members",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              color: AppColors.primaryText,
-                                              fontFamily: "Source Sans Pro",
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 4),
-                                            child: Text(
-                                              "Weston",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: AppColors.primaryText,
-                                                fontFamily: "Source Sans Pro",
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 124,
-                                    height: 21,
-                                    margin: EdgeInsets.only(left: 19),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            "Location",
+                                            "Location:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -463,7 +539,46 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 8),
                                             child: Text(
-                                              "Walmart",
+                                              Location,
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                color: AppColors.primaryText,
+                                                fontFamily: "Source Sans Pro",
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 215,
+                                    height: 23,
+                                    margin: EdgeInsets.only(left: 19, bottom: 2),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Text(
+                                            "Start Date:",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: AppColors.primaryText,
+                                              fontFamily: "Source Sans Pro",
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              StartDate,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -480,14 +595,14 @@ class DashboardScreen extends StatelessWidget {
                                   Container(
                                     width: 182,
                                     height: 23,
-                                    margin: EdgeInsets.only(left: 19, bottom: 20),
+                                    margin: EdgeInsets.only(left: 19, bottom: 2),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Time",
+                                            "Time:",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -502,7 +617,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 10),
                                             child: Text(
-                                              "3:30 PM - 5:00 PM",
+                                              Time,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -534,7 +649,7 @@ class DashboardScreen extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.only(left: 19, top: 13),
                                     child: Text(
-                                      "Low Inventory",
+                                      "Lowest Inventory",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         color: AppColors.accentText,
@@ -546,7 +661,7 @@ class DashboardScreen extends StatelessWidget {
                                   ),
                                   Spacer(),
                                   Container(
-                                    width: 200,
+                                    width: 240,
                                     height: 21,
                                     margin: EdgeInsets.only(left: 18),
                                     child: Row(
@@ -555,7 +670,7 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Item 1:",
+                                             Name1 + ':',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -570,7 +685,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "Number of items",
+                                              Stock1 + "  " + Measurement1,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -594,7 +709,7 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Item 2:",
+                                            Name2 + ':',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -609,7 +724,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "Number of items",
+                                              Stock2 + "  " + Measurement2,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,
@@ -633,7 +748,7 @@ class DashboardScreen extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Text(
-                                            "Item 3:",
+                                            Name3 + ':',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                               color: AppColors.primaryText,
@@ -648,7 +763,7 @@ class DashboardScreen extends StatelessWidget {
                                           child: Container(
                                             margin: EdgeInsets.only(left: 7),
                                             child: Text(
-                                              "Number of low items",
+                                              Stock3 + "  " + Measurement3,
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 color: AppColors.primaryText,

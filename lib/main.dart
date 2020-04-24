@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (ctx) => LoginScreen(),
-       DashboardScreen.routeName: (ctx) => DashboardScreen(),
+       StatefulWidgetReg.routeName: (ctx) => StatefulWidgetReg(),
        LoginScreen.routeName: (ctx) => LoginScreen(),
        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
        GroupsScreen.routeName: (ctx) => GroupsScreen(),
