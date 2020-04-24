@@ -1,55 +1,57 @@
 import 'package:flutter/material.dart';
 import '../color/colors.dart';
-import 'package:scoutboard/widgets/globals.dart' as global;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../screens/inventory_screen.dart';
 
+class NewEvent extends StatefulWidget {
+  final Function addEvent;
 
-class NewInventory extends StatefulWidget {
-  final Function addItm;
-
-  NewInventory(this.addItm);
+  NewEvent(this.addEvent);
 
   @override
-  _NewInventoryState createState() => _NewInventoryState();
+  _NewEventState createState() => _NewEventState();
 }
 
-class _NewInventoryState extends State<NewInventory> {
-  final _titleController = TextEditingController();
-  final _amountController = TextEditingController();
-  final _categoryController = TextEditingController();
-  final _measurementController = TextEditingController();
-  final _totalSoldController = TextEditingController();
-  final _quantityController = TextEditingController();
+
+
+
+class _NewEventState extends State<NewEvent> {
+  final _nameController = TextEditingController();
+  final _numberOfTeamsController = TextEditingController();
+  final _startDateController = TextEditingController();
+  final _endDateController = TextEditingController();
+  final _targetGoalController = TextEditingController();
+  final _locationController = TextEditingController();
+  final _timeController = TextEditingController();
+  
 
   void _submitData() {
-    if (_amountController.text.isEmpty) {
+    if (_nameController.text.isEmpty) {
       return;
     }
-    final enteredTitle = _titleController.text;
-    final enteredAmount = _amountController.text;
-    final enteredCategory = _categoryController.text;
-    final enteredMeasurement = _measurementController.text;
-    final enteredTotalSold = _totalSoldController.text;
-    final enteredQuantity = _quantityController.text;
+    final enteredName = _nameController.text;
+    final enteredNumberOfTeams = _numberOfTeamsController.text;
+    final enteredStartDate = _startDateController.text;
+    final enteredEndDate = _endDateController.text;
+    final enteredTargetGoal = _targetGoalController.text;
+    final enteredLocation = _locationController.text;
+    final enteredTime = _timeController.text;
 
-    if (enteredTitle.isEmpty ||
-        enteredAmount.isEmpty ||
-        enteredCategory.isEmpty ||
-        enteredMeasurement.isEmpty ||
-        enteredTotalSold.isEmpty ||
-        enteredQuantity.isEmpty) {
+    if (enteredName.isEmpty ||
+        enteredNumberOfTeams.isEmpty ||
+        enteredStartDate.isEmpty ||
+        enteredEndDate.isEmpty ||
+        enteredTargetGoal.isEmpty ||
+        enteredLocation.isEmpty ||
+        enteredTime.isEmpty)  {
       return;
     }
 
-    widget.addItm(
-      enteredTitle,
-      enteredAmount,
-      enteredCategory,
-      enteredMeasurement,
-      enteredTotalSold,
-      enteredQuantity,
+    widget.addEvent(
+      enteredName,
+      enteredNumberOfTeams,
+      enteredStartDate,
+      enteredEndDate,
+      enteredTargetGoal,
+      enteredTime,
     );
 
     Navigator.of(context).pop();
@@ -91,14 +93,14 @@ class _NewInventoryState extends State<NewInventory> {
                       ),
                     ),
                   ),
-                  controller: _titleController,
+                  controller: _nameController,
                 ),
                 TextField(
                   style: TextStyle(
                     color: AppColors.primaryText,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Category',
+                    labelText: 'Number of Team Members',
                     labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
@@ -113,14 +115,14 @@ class _NewInventoryState extends State<NewInventory> {
                       ),
                     ),
                   ),
-                  controller: _categoryController,
+                  controller: _numberOfTeamsController,
                 ),
                 TextField(
                   style: TextStyle(
                     color: AppColors.primaryText,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Price',
+                    labelText: 'Start Date',
                     labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
@@ -135,7 +137,52 @@ class _NewInventoryState extends State<NewInventory> {
                       ),
                     ),
                   ),
-                  controller: _amountController,
+                  controller: _startDateController,
+                ),
+                TextField(
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'End Date',
+                    labelStyle: TextStyle(
+                      color: AppColors.primaryText,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                  ),
+                  controller: _endDateController,
+                  
+                ),
+                TextField(
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Target Sales Goal',
+                    labelStyle: TextStyle(
+                      color: AppColors.primaryText,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.primaryText,
+                      ),
+                    ),
+                  ),
+                  controller: _targetGoalController,
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
@@ -143,7 +190,7 @@ class _NewInventoryState extends State<NewInventory> {
                     color: AppColors.primaryText,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Quantity',
+                    labelText: 'Location',
                     labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
@@ -158,15 +205,15 @@ class _NewInventoryState extends State<NewInventory> {
                       ),
                     ),
                   ),
-                  controller: _quantityController,
-                  keyboardType: TextInputType.number,
+                  controller: _locationController,
+                  
                 ),
-                TextField(
+                 TextField(
                   style: TextStyle(
                     color: AppColors.primaryText,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Unit of Measurement',
+                    labelText: 'Time of Event',
                     labelStyle: TextStyle(
                       color: AppColors.primaryText,
                     ),
@@ -181,30 +228,7 @@ class _NewInventoryState extends State<NewInventory> {
                       ),
                     ),
                   ),
-                  controller: _measurementController,
-                ),
-                TextField(
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Total Sold',
-                    labelStyle: TextStyle(
-                      color: AppColors.primaryText,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                  ),
-                  controller: _totalSoldController,
-                  keyboardType: TextInputType.number,
+                  controller: _timeController, 
                 ),
                 SizedBox(height: 80),
                 ButtonTheme(
@@ -214,13 +238,13 @@ class _NewInventoryState extends State<NewInventory> {
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(40.0),
                     ),
-                    child: Text('Add Inventory'),
+                    child: Text('Add Event'),
                     color: AppColors.secondaryElement,
                     textColor: Theme.of(context).textTheme.button.color,
                     onPressed: _submitData,
                   ),
                 ),
-                SizedBox(height: 140),
+                SizedBox(height: 90),
               ],
             ),
           ),

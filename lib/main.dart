@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
        LoginScreen.routeName: (ctx) => LoginScreen(),
        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
        GroupsScreen.routeName: (ctx) => GroupsScreen(),
-       EventsScreen.routeName: (ctx) => EventsScreen(),
+       EventScreen.routeName: (ctx) => EventScreen(),
        InventoryScreen.routeName: (ctx) => InventoryScreen(),
        SettingsScreen.routeName: (ctx) => SettingsScreen(),
        CalendarScreen.routeName: (ctx) => CalendarScreen(),

@@ -49,7 +49,7 @@ class MyDrawer extends StatelessWidget {
             'Events',
             AssetImage('assets/images/icon-invoices.png'),
             () {
-              Navigator.of(context).pushNamed(EventsScreen.routeName);
+              Navigator.of(context).pushNamed(EventScreen.routeName);
             }
           ),
           buildListTile(
