@@ -336,7 +336,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                           children: [
                             Container(
                               width: 314,
-                              height: 200,
+                              height: 181,
                               child: Stack(
                                 children: [
                                   Positioned(
