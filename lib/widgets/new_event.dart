@@ -230,7 +230,7 @@ class _NewEventState extends State<NewEvent> {
                   ),
                   controller: _timeController, 
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 80),
                 ButtonTheme(
                   minWidth: 150.0,
                   height: 50.0,
@@ -244,7 +244,7 @@ class _NewEventState extends State<NewEvent> {
                     onPressed: _submitData,
                   ),
                 ),
-                SizedBox(height: 140),
+                SizedBox(height: 90),
               ],
             ),
           ),

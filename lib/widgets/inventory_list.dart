@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoutboard/color/colors.dart';
-
+import 'package:scoutboard/widgets/globals.dart' as global;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../screens/inventory_screen.dart';
 import '../models/transaction.dart';
 
-class InventoryList extends StatelessWidget {
-  final List<Item> inventory;
-  final Function deleteItm;
 
-  InventoryList(this.inventory, this.deleteItm);
 
+class InventoryList extends StatefulWidget {
+  final List<Album> futureAlbum;
+  
+  InventoryList({Key key, this.futureAlbum}) : super(key: key);
+
+  @override
+  _InventoryListState createState() => _InventoryListState();
+}
+
+class _InventoryListState extends State<InventoryList> {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 700,
-      child: inventory.isEmpty
+      child: widget.futureAlbum.isEmpty
           ? Container(
               alignment: Alignment(0.0, -0.3),
               child: Text(
@@ -40,26 +49,26 @@ class InventoryList extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(6),
                           child: FittedBox(
-                            child: Text('\$${inventory[index].amount}'),
+                            child: Text('\$${widget.futureAlbum[index].price}'),
                           ),
                         ),
                       ),
-                      title: Text(inventory[index].title,
+                      title: Text(widget.futureAlbum[index].name,
                           style: TextStyle(
                             fontSize: 25,
                             color: AppColors.primaryText,
                           )),
-                      subtitle: Text(inventory[index].category,
+                      subtitle: Text(widget.futureAlbum[index].category,
                           style: TextStyle(
                             fontSize: 15,
                             color: AppColors.primaryText,
                           )),
                       trailing: Column(
                         children: <Widget>[
-                          Text('Qty: ${inventory[index].quantity} ${inventory[index].measurement}',
+                          Text('Qty: ${widget.futureAlbum[index].stock} ${widget.futureAlbum[index].typeOfM}',
                               style: TextStyle(fontSize: 20)),
                           Text(
-                        'Sold: ${inventory[index].totalSold} ${inventory[index].measurement}',
+                        'Sold: ${widget.futureAlbum[index].sold} ${widget.futureAlbum[index].typeOfM}',
                         style: TextStyle(fontSize: 20)
                         
                       ),
@@ -71,13 +80,14 @@ class InventoryList extends StatelessWidget {
                         caption: 'Delete',
                         color: Colors.red,
                         icon: Icons.delete,
-                        onTap: () => deleteItm(inventory[index].id),
+                        onTap: () => deleteAlbum(widget.futureAlbum[index].scoutID, widget.futureAlbum[index].name),
+                        
                       ),
                     ],
                   ),
                 );
               },
-              itemCount: inventory.length,
+              itemCount: widget.futureAlbum.length,
             ),
     );
   }

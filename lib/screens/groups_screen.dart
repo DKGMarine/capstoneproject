@@ -105,11 +105,11 @@ class GroupsScreenState extends State<GroupsScreen>{
  
   @override
   Widget build(BuildContext context){
-    createAlbum(global.userID).then((futureAlbum) {
+    //createAlbum(global.userID).then((futureAlbum) {
 
-      print('1');
+     // print('1');
 
-    });
+   // });
   void _modalPress(){
     showModalBottomSheet(context: context, 
     builder: (context){

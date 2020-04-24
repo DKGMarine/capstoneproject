@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import '../color/colors.dart';
+import 'package:scoutboard/widgets/globals.dart' as global;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../screens/inventory_screen.dart';
+
 
 class NewInventory extends StatefulWidget {
   final Function addItm;
