@@ -172,8 +172,8 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
   Timer timer;
   DashboardScreen() {
-    const oneSecond = const Duration(seconds: 2);
-    new Timer.periodic(oneSecond, (Timer T) => createAlbum2(global.userID).then((futureAlbum2) {
+
+     createAlbum2(global.userID).then((futureAlbum2) {
 
       MoneyRaised = futureAlbum2.MoneyRaised;
       Name = futureAlbum2.Name;
@@ -185,9 +185,9 @@ class DashboardScreen extends State<StatefulWidgetReg> {
     }
     ).catchError((e){
       print("Error in getting closest event");
-    }));
+    });
 
-    new Timer.periodic(oneSecond, (Timer T) => createAlbum(global.userID).then((futureAlbum) => setState((){
+     createAlbum(global.userID).then((futureAlbum) => setState((){
 
       futureAlbum.sort((a,b) => a.Stock.compareTo(b.Stock));
 
@@ -235,7 +235,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
         }
       }
 
-    })));
+    }));
   }
 
 
@@ -362,7 +362,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                             "Goal",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                              color: AppColors.accentText,
+                                              color: Colors.cyanAccent,
                                               fontFamily: "Source Sans Pro",
                                               fontWeight: FontWeight.w700,
                                               fontSize: 16,
@@ -372,12 +372,12 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.center,
                                           child: new CircularPercentIndicator(
-                                            radius: 103.0,
+                                            radius: 100.0,
                                             lineWidth: 10.0,
                                             percent: (double.parse(MoneyRaised) / double.parse(TargetGoal)),
                                             center: new Text((((double.parse(MoneyRaised) / double.parse(TargetGoal)) * 100.0).toString() + '%'), style: TextStyle(fontSize: 22),),
-                                            backgroundColor: Colors.blueGrey,
-                                            progressColor: Colors.green,
+                                            backgroundColor: Colors.white,
+                                            progressColor: AppColors.secondaryElement,
                                           ),
                                         ),
                                         Container(
@@ -444,7 +444,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                       "Upcoming Event",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: AppColors.accentText,
+                                        color: Colors.cyanAccent,
                                         fontFamily: "Source Sans Pro",
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15,
@@ -474,7 +474,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 20),
+                                            margin: EdgeInsets.only(left: 33),
                                             child: Text(
                                               Name,
                                               textAlign: TextAlign.left,
@@ -514,7 +514,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 8),
+                                            margin: EdgeInsets.only(left: 14),
                                             child: Text(
                                               Location,
                                               textAlign: TextAlign.left,
@@ -532,8 +532,8 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                   ),
                                   Container(
                                     width: 215,
-                                    height: 23,
-                                    margin: EdgeInsets.only(left: 19, bottom: 2),
+                                    height: 17,
+                                    margin: EdgeInsets.only(left: 19),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
@@ -553,7 +553,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 10),
+                                            margin: EdgeInsets.only(left: 4),
                                             child: Text(
                                               StartDate,
                                               textAlign: TextAlign.left,
@@ -571,7 +571,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                   ),
                                   Container(
                                     width: 182,
-                                    height: 23,
+                                    height: 21,
                                     margin: EdgeInsets.only(left: 19, bottom: 2),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -592,7 +592,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 10),
+                                            margin: EdgeInsets.only(left: 38),
                                             child: Text(
                                               Time,
                                               textAlign: TextAlign.left,
@@ -624,22 +624,22 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.only(left: 19, top: 13),
+                                    margin: EdgeInsets.only(left: 19, top: 13, bottom: 14),
                                     child: Text(
                                       "Lowest Inventory",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: AppColors.accentText,
+                                        color: Colors.cyanAccent,
                                         fontFamily: "Source Sans Pro",
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15,
                                       ),
                                     ),
                                   ),
-                                  Spacer(),
+
                                   Container(
                                     width: 250,
-                                    height: 21,
+                                    height: 17,
                                     margin: EdgeInsets.only(left: 18),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,

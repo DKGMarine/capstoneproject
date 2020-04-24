@@ -32,7 +32,7 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           buildListTile(
-            'Groups',
+            'Scouts',
             AssetImage('assets/images/icon-customers.png'),
             () {
               Navigator.of(context).pushNamed(GroupsScreen.routeName);

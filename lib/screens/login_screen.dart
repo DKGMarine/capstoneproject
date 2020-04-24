@@ -77,7 +77,8 @@ class _LoginScreen extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+         resizeToAvoidBottomPadding: true,
+         resizeToAvoidBottomInset:   true,
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
