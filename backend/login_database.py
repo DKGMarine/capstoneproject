@@ -11,6 +11,7 @@ import json
 import random
 import string
 import re
+import datetime
 
 cred = credentials.Certificate('auth.json')
 firebase_admin.initialize_app(cred)
@@ -250,18 +251,20 @@ class loginDatabase:
         if len(data) == 0:
             return "Error Code 10"
 
+
         return json.dumps(data)
 
     def Modify_inventory(self, Name, ScoutID, NameUpdate, PriceUpdate, StockUpdate, SoldUpdate, CategoryUpdate, MeasureUpdate):
-        doc_ref = db.collection(u'Inventory').where(u'Name',u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).document()
-        doc_ref.update({
-            u'Name' : str(NameUpdate),
-            u'Price' : str(PriceUpdate),
-            u'Stock' : str(StockUpdate),
-            u'Sold'  : str(SoldUpdate),
-            u'Category' : str(CategoryUpdate),
-            u'Measurement' : str(MeasureUpdate)
-        })
+        doc_ref = db.collection(u'Inventory').where(u'Name',u'==', str("ThinMints2")).where(u'ScoutID', u'==', str("25275")).stream()
+        for doc in doc_ref:
+            doc.update({
+                u'Name' : str(NameUpdate),
+                u'Price' : str(PriceUpdate),
+                u'Stock' : str(StockUpdate),
+                u'Sold'  : str(SoldUpdate),
+                u'Category' : str(CategoryUpdate),
+                u'Measurement' : str(MeasureUpdate)
+                })
 
         return "Success"
 
@@ -311,7 +314,7 @@ class loginDatabase:
         return json.dumps(data)
 
     #Done
-    def addScoutMembers(self, FirstName, LastName, NumberOfSales, Rank, ScoutID):
+    def addScoutMembers(self, FirstName, LastName, NumberOfSales,StockHad, Rank, ScoutID):
 
         doc_ref = db.collection(u'member').document()
 
@@ -319,10 +322,41 @@ class loginDatabase:
             u'FirstName' : str(FirstName),
             u'LastName'  : str(LastName),
             u'NumberOfSales' : str(NumberOfSales),
+            u'StockHad' : str(StockHad)
             u'Rank' : str(Rank),
-            u'ScoutID' : ScoutID
+            u'ScoutID' : str(ScoutID)
         }
 
 
         doc_ref.set(data)
         return "Success"
+
+    def getting_closestEvent(self, ScoutID):
+
+        doc_ref = db.collection(u'fundraiser')
+        query_ref = doc_ref.where(u'ScoutID',u'==',str(ScoutID)).stream()
+
+        data = []
+        for docs in query_ref:
+            data.append(docs.to_dict())
+
+        now = datetime.date.today()
+        event_date = datetime.date(1000, 5, 5)
+        temp = datetime.date.today()
+        object = []
+
+        for item in data:
+            object_date = item['StartDate']
+            object_date = object_date.split('/')
+            current_event = datetime.date(int(object_date[2]), int(object_date[0]), int(object_date[1]))
+
+            first = now - current_event
+            second = now - event_date
+            if abs(first) < abs(second):
+                event_date = current_event
+                object = item
+
+        if object is None:
+            return "No Fundraisers"
+
+        return json.dumps(object)

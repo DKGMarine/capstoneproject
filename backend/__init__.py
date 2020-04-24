@@ -14,6 +14,7 @@ from deletefundraiser import deletefundraiser
 from addinventory import addinventory
 from addScoutMembers import addScoutMembers
 from modifyInventory import modifyInventory
+from getting_closestEvent import getting_closestEvent
 
 app = Flask(__name__)
 
@@ -29,9 +30,12 @@ app.register_blueprint(addinventory)#Done
 app.register_blueprint(addScoutMembers)#done
 app.register_blueprint(members)#Done
 app.register_blueprint(overview) #Done
-
-#app.register_blueprint(modifyInventory) #Needs to work
+app.register_blueprint(getting_closestEvent)
+app.register_blueprint(modifyInventory) #Needs to work
 #Modify fundraiserID
+#Team Members deleteing
+#Modify Team Members
+
 
 #Added but not used
 app.register_blueprint(teamsWithNoFundraiser)

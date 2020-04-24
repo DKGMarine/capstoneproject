@@ -11,8 +11,9 @@ def main_index():
 
     FirstName = request.form.get('FirstName')
     LastName  = request.form.get('LastName')
-    NumberOfSales = request.form.get('NumberOfSales')
+    NumberOfSales = request.form.get('Sold')
+    StockHad = request.form.get('Stock')
     Rank = request.form.get('Rank')
     ScoutID = request.form.get('ScoutID')
     object = login_database.loginDatabase()
-    return object.addScoutMembers(FirstName, LastName, NumberOfSales, Rank, ScoutID)
+    return object.addScoutMembers(FirstName, LastName, NumberOfSales, StockHad, Rank, ScoutID)
