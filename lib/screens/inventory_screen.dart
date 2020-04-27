@@ -112,7 +112,7 @@ Future addAlbum(String Name, String Price, String Stock,
     String Sold, String Category, String Type_Of_M, String ID) async {
   //ID = '25275';
   final http.Response response = await http.post(
-      'https://scoutboard.uc.r.appsot.com/addinventory', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/addinventory', // change this to what page you are requesting data from
 
       body: {
         'Name': Name,
@@ -141,7 +141,7 @@ Future addAlbum(String Name, String Price, String Stock,
 Future<Album> deleteAlbum(String ID, String Name) async {
   //ID = '25275';
   final http.Response response = await http.post(
-      'https://scoutboard.uc.r.appsot.com/inventoryDelete', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/inventoryDelete', // change this to what page you are requesting data from
 
       body: {
         'ID': ID,
@@ -180,7 +180,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add), onPressed: () {},
             //onPressed: () => _startAddNewInventory(context),
           ),
         ],
@@ -208,7 +208,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        //onPressed: () => _startAddNewInventory(context),
+        onPressed: () => {},
       ),
     );
   }

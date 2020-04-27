@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import '../styles/style.dart';
-import '../values/values.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+//import 'package:scoutboard/widgets/globals.dart' as global; -> uncomment if you need the global variable for the user id
 
 
 class Album{ // change this to parse what data you need
 
-  final int ID;
-  Album({this.ID});
+  final int id;
+  Album({this.id});
 
   factory Album.fromJson(Map<String, dynamic> json){
 
     return Album(
-      ID: json['ID'],
+      id: json['ID'],
     );
 
 
@@ -24,7 +23,7 @@ class Album{ // change this to parse what data you need
 
 
 
-Future<Album> createAlbum(String ID) async {
+Future<Album> createAlbum(String id) async {
 
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/login', // change this to what page you are requesting data from
@@ -32,7 +31,7 @@ Future<Album> createAlbum(String ID) async {
       body:
 
       {
-        'ID': ID,
+        'ID': id,
       }
 
   );
