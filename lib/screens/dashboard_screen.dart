@@ -73,9 +73,9 @@ class Album2{ // change this to parse what data you need
 
 Future<Album2> createAlbum2(String ID) async {
 
-  ID = '25275';
+  //ID = '25275';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/getting_closestEvent',
+      'https://scoutboard.appspot.com/getting_closestEvent',
 
       body:
 
@@ -105,10 +105,10 @@ List<Album> parseAlbums(String responseBody){
 }
 Future<List<Album>> createAlbum(String ID) async {
 
-  ID = '25275';
+  //ID = '25275';
   // trying to connect to database here
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/inventory', // change this to what page you are requesting data from
 
       body:
       {

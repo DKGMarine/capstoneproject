@@ -27,7 +27,7 @@ class Album{
 Future<Album> createAlbum(String email, String password) async {
 
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login',
+      'https://scoutboard.appspot.com/login',
 
     body:
 

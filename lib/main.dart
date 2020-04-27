@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => LoginScreen(),
+        '/': (ctx) => InventoryScreen(),
        StatefulWidgetReg.routeName: (ctx) => StatefulWidgetReg(),
        LoginScreen.routeName: (ctx) => LoginScreen(),
        SalesScreen.routeName: (ctx) => SalesScreen(),
