@@ -80,13 +80,13 @@ List<Album> parseAlbums(String responseBody) {
   return parsed.map<Album>((json) => Album.fromJson(json)).toList();
 }
 
-Future<List<Album>> createAlbum(String ID) async {
+Future<List<Album>> createAlbum(String id) async {
   //ID = '25275';
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/inventory', // change this to what page you are requesting data from
 
       body: {
-        'ScoutID': ID,
+        'ScoutID': id,
       });
 
   if (response.statusCode == 200) {
@@ -108,20 +108,20 @@ Future<List<Album>> createAlbum(String ID) async {
   }
 }
 
-Future addAlbum(String Name, String Price, String Stock,
-    String Sold, String Category, String Type_Of_M, String ID) async {
+Future addAlbum(String name, String price, String stock, String sold,
+    String category, String typeOfM, String id) async {
   //ID = '25275';
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/addinventory', // change this to what page you are requesting data from
 
       body: {
-        'Name': Name,
-        'Price': Price,
-        'Stock': Stock,
-        'Sold': Sold,
-        'Category': Category,
-        'Type_of_M': Type_Of_M,
-        'ScoutID': ID,
+        'Name': name,
+        'Price': price,
+        'Stock': stock,
+        'Sold': sold,
+        'Category': category,
+        'Type_of_M': typeOfM,
+        'ScoutID': id,
       });
 
   if (response.statusCode == 200) {
@@ -138,14 +138,14 @@ Future addAlbum(String Name, String Price, String Stock,
   }
 }
 
-Future<Album> deleteAlbum(String ID, String Name) async {
-  //ID = '25275';
+Future<Album> deleteAlbum(String id, String name) async {
+  
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/inventoryDelete', // change this to what page you are requesting data from
 
       body: {
-        'ID': ID,
-        'Name': Name,
+        'ID': id,
+        'Name': name,
       });
 
   if (response.statusCode == 200) {
@@ -169,8 +169,6 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
-   
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -208,7 +206,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => {},
+        onPressed: () {},
       ),
     );
   }
@@ -216,7 +214,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
 
 class InventoryList extends StatefulWidget {
   final List<Album> futureAlbum;
-  
+
   InventoryList({Key key, this.futureAlbum}) : super(key: key);
 
   @override
@@ -270,13 +268,12 @@ class _InventoryListState extends State<InventoryList> {
                           )),
                       trailing: Column(
                         children: <Widget>[
-                          Text('Qty: ${widget.futureAlbum[index].stock} ${widget.futureAlbum[index].typeOfM}',
+                          Text(
+                              'Qty: ${widget.futureAlbum[index].stock} ${widget.futureAlbum[index].typeOfM}',
                               style: TextStyle(fontSize: 20)),
                           Text(
-                        'Sold: ${widget.futureAlbum[index].sold} ${widget.futureAlbum[index].typeOfM}',
-                        style: TextStyle(fontSize: 20)
-                        
-                      ),
+                              'Sold: ${widget.futureAlbum[index].sold} ${widget.futureAlbum[index].typeOfM}',
+                              style: TextStyle(fontSize: 20)),
                         ],
                       ),
                     ),
@@ -285,8 +282,9 @@ class _InventoryListState extends State<InventoryList> {
                         caption: 'Delete',
                         color: Colors.red,
                         icon: Icons.delete,
-                        onTap: () => deleteAlbum(widget.futureAlbum[index].scoutID, widget.futureAlbum[index].name),
-                        
+                        onTap: () => deleteAlbum(
+                            widget.futureAlbum[index].scoutID,
+                            widget.futureAlbum[index].name),
                       ),
                     ],
                   ),
