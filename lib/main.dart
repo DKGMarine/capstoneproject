@@ -34,7 +34,7 @@ Map<int, Color> color = {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var routeName;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Scoutboard',
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => InventoryScreen(),
+        '/': (ctx) => LoginScreen(),
        StatefulWidgetReg.routeName: (ctx) => StatefulWidgetReg(),
        LoginScreen.routeName: (ctx) => LoginScreen(),
        SalesScreen.routeName: (ctx) => SalesScreen(),
