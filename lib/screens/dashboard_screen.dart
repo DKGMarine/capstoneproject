@@ -73,9 +73,8 @@ class Album2{ // change this to parse what data you need
 
 Future<Album2> createAlbum2(String ID) async {
 
-  ID = '25275';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/getting_closestEvent',
+      'https://scoutboard.appspot.com/getting_closestEvent',
 
       body:
 
@@ -84,7 +83,7 @@ Future<Album2> createAlbum2(String ID) async {
       }
 
   );
-
+  print('1');
   print(response.body);
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
@@ -105,10 +104,9 @@ List<Album> parseAlbums(String responseBody){
 }
 Future<List<Album>> createAlbum(String ID) async {
 
-  ID = '25275';
   // trying to connect to database here
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/inventory', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/inventory', // change this to what page you are requesting data from
 
       body:
       {
@@ -161,11 +159,11 @@ class DashboardScreen extends State<StatefulWidgetReg> {
   String Stock2 = "";
   String Stock3 = "";
 
-  String MoneyRaised = "";
+  String MoneyRaised = "1";
   String Name = "";
   String StartDate = "";
   String EndDate = "";
-  String TargetGoal = "";
+  String TargetGoal = "1";
   String Location = "";
   String Time = "";
 
@@ -175,13 +173,15 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
      createAlbum2(global.userID).then((futureAlbum2) {
 
-      MoneyRaised = futureAlbum2.MoneyRaised;
-      Name = futureAlbum2.Name;
-      StartDate = futureAlbum2.StartDate;
-      EndDate = futureAlbum2.EndDate;
-      TargetGoal = futureAlbum2.TargetGoal;
-      Location = futureAlbum2.Location;
-      Time = futureAlbum2.Time;
+       if(futureAlbum2 != null) {
+         MoneyRaised = futureAlbum2.MoneyRaised;
+         Name = futureAlbum2.Name;
+         StartDate = futureAlbum2.StartDate;
+         EndDate = futureAlbum2.EndDate;
+         TargetGoal = futureAlbum2.TargetGoal;
+         Location = futureAlbum2.Location;
+         Time = futureAlbum2.Time;
+       }
     }
     ).catchError((e){
       print("Error in getting closest event");
@@ -189,6 +189,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
      createAlbum(global.userID).then((futureAlbum) => setState((){
 
+       if(!futureAlbum.isEmpty)
       futureAlbum.sort((a,b) => a.Stock.compareTo(b.Stock));
 
        Name1 = "";
@@ -375,7 +376,12 @@ class DashboardScreen extends State<StatefulWidgetReg> {
                                             radius: 100.0,
                                             lineWidth: 10.0,
                                             percent: (double.parse(MoneyRaised) / double.parse(TargetGoal)),
-                                            center: new Text((((double.parse(MoneyRaised) / double.parse(TargetGoal)) * 100.0).toString() + '%'), style: TextStyle(fontSize: 22),),
+                                            center: new Text((
+
+                                                ((double.parse(MoneyRaised) / double.parse(TargetGoal)) * 100.0).toString() + '%'),
+
+
+                                              style: TextStyle(fontSize: 22),),
                                             backgroundColor: Colors.white,
                                             progressColor: AppColors.secondaryElement,
                                           ),

@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 Future createAlbum(String firstName, String lastName, String dob, String email, String password) async {
 
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/signup',
+      'http://scoutboard.appspot.com/signup',
 
       body:
 
