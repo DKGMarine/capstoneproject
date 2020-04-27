@@ -60,7 +60,7 @@ Future<Album> createAlbum(String ID) async {
 
   ID = '25275';
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/fundraiserGroups', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/fundraiserGroups', // change this to what page you are requesting data from
 
       body:
 

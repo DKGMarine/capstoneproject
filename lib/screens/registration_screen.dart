@@ -10,7 +10,6 @@ Future createAlbum(String firstName, String lastName, String dob, String email, 
 
   final http.Response response = await http.post(
       'http://scoutboard.appspot.com/signup',
-
       body:
 
       {

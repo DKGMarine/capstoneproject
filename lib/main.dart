@@ -34,7 +34,7 @@ Map<int, Color> color = {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var routeName;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Scoutboard',

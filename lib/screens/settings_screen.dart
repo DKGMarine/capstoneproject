@@ -25,7 +25,7 @@ class Album{ // change this to parse what data you need
 Future<Album> createAlbum(String ID) async {
 
   final http.Response response = await http.post(
-      'https://capstoneproject-271322.appspot.com/login', // change this to what page you are requesting data from
+      'https://scoutboard.appspot.com/login', // change this to what page you are requesting data from
 
       body:
 
