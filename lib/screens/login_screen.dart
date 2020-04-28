@@ -66,7 +66,11 @@ class _LoginScreen extends State<LoginScreen> {
 
 
   void onSIGNUPPressed(BuildContext context) => Navigator.of(context).pushNamed(RegistrationScreen.routeName);
-  void onRectangle14Pressed(BuildContext context) => Navigator.of(context).pushNamed(StatefulWidgetReg.routeName);
+  void onRectangle14Pressed(BuildContext context) {
+    Navigator.of(context).pop();
+    Navigator.of(context).pushNamed(StatefulWidgetReg.routeName);
+    
+  }
   
   Future<Album> futureAlbum;
   final myController = TextEditingController();

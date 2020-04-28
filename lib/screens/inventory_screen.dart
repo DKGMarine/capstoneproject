@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoutboard/color/colors.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
+
+import 'dashboard_screen.dart';
 
 /*
 ADDING:
@@ -79,7 +80,6 @@ List<Album> parseAlbums(String responseBody) {
 }
 
 Future<List<Album>> createAlbum(String id) async {
-  //ID = '25275';
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/inventory', // change this to what page you are requesting data from
 
@@ -166,23 +166,35 @@ class InventoryScreen extends StatefulWidget {
 }
 
 class _InventoryScreenState extends State<InventoryScreen> {
+  void _startAddNewEvent(BuildContext ctx) {
+    showModalBottomSheet(
+      backgroundColor: Color.fromRGBO(255, 0, 0, 0.0),
+      isScrollControlled: true,
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewInventory(),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(StatefulWidgetReg.routeName);
+            }),
         elevation: 0,
         title: Text(
           'Inventory',
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => NewInventory(),
-              ));
-            },
-          ),
-        ],
       ),
       body: FutureBuilder<List<Album>>(
           future: createAlbum(global.userID),
@@ -206,9 +218,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {},
-      ),
+          child: Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              _startAddNewEvent(context);
+            });
+          }),
     );
   }
 }
@@ -283,13 +298,15 @@ class _InventoryListState extends State<InventoryList> {
                     ),
                     secondaryActions: <Widget>[
                       IconSlideAction(
-                        caption: 'Delete',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () => deleteAlbum(
-                            widget.futureAlbum[index].scoutID,
-                            widget.futureAlbum[index].name),
-                      ),
+                          caption: 'Delete',
+                          color: Colors.red,
+                          icon: Icons.delete,
+                          onTap: () {
+                            setState(() {
+                              deleteAlbum(widget.futureAlbum[index].scoutID,
+                                  widget.futureAlbum[index].name);
+                            });
+                          }),
                     ],
                   ),
                 );
