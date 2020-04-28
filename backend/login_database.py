@@ -380,7 +380,7 @@ class loginDatabase:
             return "Email Not Found"
 
         message = Mail(
-            from_email='metwally.bassam@gmail.com',
+            from_email='<EMAIL>',
             to_emails=str(Email),
             subject='Password Reset for ScoutBoard',
             html_content='Your Password is : {}'.format(password))
