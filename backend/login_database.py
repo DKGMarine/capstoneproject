@@ -12,6 +12,9 @@ import random
 import string
 import re
 import datetime
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 cred = credentials.Certificate('auth.json')
 firebase_admin.initialize_app(cred)
@@ -126,9 +129,9 @@ class loginDatabase:
         doc_ref = db.collection(u'overview').document()
 
         data = {
-            u'NumberOfFundraiser' : '15',
-            u'PercentageOfSold' : '100',
-            u'UpcomingFundraiser' : 'FundName',
+            u'NumberOfFundraiser' : '0',
+            u'PercentageOfSold' : '0',
+            u'UpcomingFundraiser' : 'Add a Fundraiser!',
             u'ScoutID'   : str(token)
         }
 
@@ -255,9 +258,9 @@ class loginDatabase:
         return json.dumps(data)
 
     def Modify_inventory(self, Name, ScoutID, NameUpdate, PriceUpdate, StockUpdate, SoldUpdate, CategoryUpdate, MeasureUpdate):
-        doc_ref = db.collection(u'Inventory').where(u'Name',u'==', str("ThinMints2")).where(u'ScoutID', u'==', str("25275")).stream()
+        doc_ref = db.collection(u'Inventory').where(u'Name',u'==', str(Name)).where(u'ScoutID', u'==', str("25275")).stream()
         for doc in doc_ref:
-            doc.update({
+            doc.reference.update({
                 u'Name' : str(NameUpdate),
                 u'Price' : str(PriceUpdate),
                 u'Stock' : str(StockUpdate),
@@ -322,7 +325,7 @@ class loginDatabase:
             u'FirstName' : str(FirstName),
             u'LastName'  : str(LastName),
             u'NumberOfSales' : str(NumberOfSales),
-            u'StockHad' : str(StockHad)
+            u'StockHad' : str(StockHad),
             u'Rank' : str(Rank),
             u'ScoutID' : str(ScoutID)
         }
@@ -360,3 +363,47 @@ class loginDatabase:
             return "No Fundraisers"
 
         return json.dumps(object)
+
+    def forgot_password(self, Email):
+
+        doc_ref = db.collection(u'users')
+        query_ref = doc_ref.where(u'Email', u'==', str(Email)).stream()
+
+        data = []
+        password = ''
+        for docs in query_ref:
+            data.append(docs.to_dict())
+            password = docs['Password']
+
+
+        if len(data) == 0:
+            return "Email Not Found"
+
+        message = Mail(
+            from_email='metwally.bassam@gmail.com',
+            to_emails=str(Email),
+            subject='Password Reset for ScoutBoard',
+            html_content='Your Password is : {}'.format(password))
+        try:
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+        except Exception as e:
+           return str(e)
+
+
+    def change_password(self, Email, Password, UpdatedPassword):
+
+        doc_ref = db.collection(u'users')
+        query_ref = doc_ref.where(u'Email',u'==',Email).where(u'Password', u'==', Password).stream()
+
+        #query_ref.update()
+
+        return "None"
+
+
+    def delete_fundraiser(self, Name, ScoutID):
+        doc_ref = db.collection(u'members').where(u'Name', u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).stream()
+        for doc in doc_ref:
+            doc.reference.delete()
+
+        return "Success"

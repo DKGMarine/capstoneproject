@@ -15,11 +15,11 @@ from addinventory import addinventory
 from addScoutMembers import addScoutMembers
 from modifyInventory import modifyInventory
 from getting_closestEvent import getting_closestEvent
+from delete_member import delete_member
 
 app = Flask(__name__)
 
-#Weston
-app.register_blueprint(login) #DONE
+app.register_blueprint(login) #Done
 app.register_blueprint(inventoryDelete) #Done
 app.register_blueprint(inventory)#Done
 app.register_blueprint(signup)#Done
@@ -30,11 +30,15 @@ app.register_blueprint(addinventory)#Done
 app.register_blueprint(addScoutMembers)#done
 app.register_blueprint(members)#Done
 app.register_blueprint(overview) #Done
-app.register_blueprint(getting_closestEvent)
-app.register_blueprint(modifyInventory) #Needs to work
-#Modify fundraiserID
-#Team Members deleteing
-#Modify Team Members
+app.register_blueprint(getting_closestEvent) #Done
+app.register_blueprint(modifyInventory) #Done
+app.register_blueprint(delete_member) #Done
+
+
+
+#Modify fundraiserID 
+#Team Members deleteing Works? Needs testing to verify more
+#Modify Team Members ? Needs testing to verify More
 
 
 #Added but not used
@@ -43,9 +47,6 @@ app.register_blueprint(teamsWithFundraiser)
 app.register_blueprint(teams)
 
 
-
-
-#Next
 #app.register_blueprint(forgotPassword)
 #app.register_blueprint(changePassword)
 #Encryption

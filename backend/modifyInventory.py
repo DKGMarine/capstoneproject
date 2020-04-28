@@ -19,4 +19,3 @@ def main_index():
     ScoutID = request.form.get('ScoutID')
     object = login_database.loginDatabase()
     return object.Modify_inventory(Name, ScoutID, NameUpdate, Price, Stock, Sold, Category, Type_of_M)
-    #def Modify_inventory(Name, ScoutID, NameUpdate, PriceUpdate, StockUpdate, SoldUpdate, CategoryUpdate, MeasureUpdate):
