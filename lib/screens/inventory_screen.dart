@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../widgets/new_item.dart';
-import '../widgets/inventory_list.dart';
 import '../models/transaction.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoutboard/color/colors.dart';
@@ -74,7 +72,6 @@ class Album {
   }
 }
 
-
 List<Album> parseAlbums(String responseBody) {
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
@@ -140,7 +137,6 @@ Future addAlbum(String name, String price, String stock, String sold,
 }
 
 Future<Album> deleteAlbum(String id, String name) async {
-  
   final http.Response response = await http.post(
       'https://scoutboard.appspot.com/inventoryDelete', // change this to what page you are requesting data from
 
@@ -179,18 +175,12 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add), onPressed: () {
-              
-              Navigator.of(context).pushReplacement(
-
-                MaterialPageRoute(
-
-                  builder: (context) => NewInventory(),
-
-                )
-              );
-          },
-
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => NewInventory(),
+              ));
+            },
           ),
         ],
       ),
@@ -269,7 +259,7 @@ class _InventoryListState extends State<InventoryList> {
                       ),
                       title: Text(widget.futureAlbum[index].name,
                           style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             color: AppColors.primaryText,
                           )),
                       subtitle: Text(widget.futureAlbum[index].category,
@@ -279,12 +269,15 @@ class _InventoryListState extends State<InventoryList> {
                           )),
                       trailing: Column(
                         children: <Widget>[
+                          SizedBox(height: 4),
                           Text(
-                              'Qty: ${widget.futureAlbum[index].stock} ${widget.futureAlbum[index].typeOfM}',
-                              style: TextStyle(fontSize: 20)),
+                            'Qty: ${widget.futureAlbum[index].stock} ${widget.futureAlbum[index].typeOfM}',
+                            style: TextStyle(fontSize: 18),
+                          ),
                           Text(
-                              'Sold: ${widget.futureAlbum[index].sold} ${widget.futureAlbum[index].typeOfM}',
-                              style: TextStyle(fontSize: 20)),
+                            'Sold: ${widget.futureAlbum[index].sold} ${widget.futureAlbum[index].typeOfM}',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ],
                       ),
                     ),
@@ -308,8 +301,6 @@ class _InventoryListState extends State<InventoryList> {
 }
 
 class NewInventory extends StatefulWidget {
-
-
   @override
   _NewInventoryState createState() => _NewInventoryState();
 }
@@ -346,19 +337,11 @@ class _NewInventoryState extends State<NewInventory> {
     print(enteredAmount);
     print(enteredCategory);
     String response;
-    addAlbum(
-      enteredTitle,
-      enteredAmount,
-      enteredCategory,
-      enteredMeasurement,
-      enteredTotalSold,
-      enteredQuantity,
-      global.userID
-    ).then((response){
-
+    addAlbum(enteredTitle, enteredAmount, enteredQuantity, enteredTotalSold,
+            enteredMeasurement, enteredCategory, global.userID)
+        .then((response) {
       print('88');
       print(response);
-
     });
 
     Navigator.of(context).pop();
