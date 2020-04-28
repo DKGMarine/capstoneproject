@@ -276,9 +276,6 @@ class _LoginScreen extends State<LoginScreen> {
                                 textColor: Colors.white,
                               );
                             });
-
-
-
                         },
                       color: AppColors.secondaryElement,
                       shape: RoundedRectangleBorder(

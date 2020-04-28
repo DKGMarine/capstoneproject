@@ -160,6 +160,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
   String Time = "";
 
   Timer timer;
+
   DashboardScreen() {
     createAlbum2(global.userID).then((futureAlbum2) {
       if (futureAlbum != null) {
@@ -176,55 +177,60 @@ class DashboardScreen extends State<StatefulWidgetReg> {
     });
 
     createAlbum(global.userID).then((futureAlbum) => setState(() {
-          if (futureAlbum.isNotEmpty)
-            futureAlbum.sort((a, b) => a.Stock.compareTo(b.Stock));
+      if (futureAlbum.isNotEmpty)
+        futureAlbum.sort((a, b) => a.Stock.compareTo(b.Stock));
 
-          Name1 = "";
-          Name2 = "";
-          Name3 = "";
-          Measurement1 = "";
-          Measurement2 = "";
-          Measurement3 = "";
-          Stock1 = "";
-          Stock2 = "";
-          Stock3 = "";
+      Name1 = "";
+      Name2 = "";
+      Name3 = "";
+      Measurement1 = "";
+      Measurement2 = "";
+      Measurement3 = "";
+      Stock1 = "";
+      Stock2 = "";
+      Stock3 = "";
 
-          if (futureAlbum.length >= 3) {
-            for (int i = 0; i < 3; i++) {
-              if (i == 0) {
-                Name1 = futureAlbum[i].Name;
-                Stock1 = futureAlbum[i].Stock;
-                Measurement1 = futureAlbum[i].Measurement;
-              } else if (i == 1) {
-                Name2 = futureAlbum[i].Name;
-                Stock2 = futureAlbum[i].Stock;
-                Measurement2 = futureAlbum[i].Measurement;
-              } else if (i == 2) {
-                Name3 = futureAlbum[i].Name;
-                Stock3 = futureAlbum[i].Stock;
-                Measurement3 = futureAlbum[i].Measurement;
-              }
-            }
-          } else {
-            for (int i = 0; i < futureAlbum.length; i++) {
-              if (i == 0) {
-                Name1 = futureAlbum[i].Name;
-                Stock1 = futureAlbum[i].Stock;
-                Measurement1 = futureAlbum[i].Measurement;
-              } else if (i == 1) {
-                Name2 = futureAlbum[i].Name;
-                Stock2 = futureAlbum[i].Stock;
-                Measurement2 = futureAlbum[i].Measurement;
-              }
-            }
+      if (futureAlbum.length >= 3) {
+        for (int i = 0; i < 3; i++) {
+          if (i == 0) {
+            Name1 = futureAlbum[i].Name;
+            Stock1 = futureAlbum[i].Stock;
+            Measurement1 = futureAlbum[i].Measurement;
+          } else if (i == 1) {
+            Name2 = futureAlbum[i].Name;
+            Stock2 = futureAlbum[i].Stock;
+            Measurement2 = futureAlbum[i].Measurement;
+          } else if (i == 2) {
+            Name3 = futureAlbum[i].Name;
+            Stock3 = futureAlbum[i].Stock;
+            Measurement3 = futureAlbum[i].Measurement;
           }
-        }));
+        }
+      } else {
+        for (int i = 0; i < futureAlbum.length; i++) {
+          if (i == 0) {
+            Name1 = futureAlbum[i].Name;
+            Stock1 = futureAlbum[i].Stock;
+            Measurement1 = futureAlbum[i].Measurement;
+          } else if (i == 1) {
+            Name2 = futureAlbum[i].Name;
+            Stock2 = futureAlbum[i].Stock;
+            Measurement2 = futureAlbum[i].Measurement;
+          }
+        }
+      }
+    }));
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     var now = new DateTime.now();
     var formatter = new DateFormat('MM/dd/yyyy');
+
+
+
     String formattedDate = formatter.format(now);
     return Scaffold(
       resizeToAvoidBottomInset: true,
