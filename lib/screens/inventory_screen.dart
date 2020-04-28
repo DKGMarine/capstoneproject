@@ -74,6 +74,7 @@ class Album {
   }
 }
 
+
 List<Album> parseAlbums(String responseBody) {
   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
@@ -178,8 +179,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add), onPressed: () {},
-            //onPressed: () => _startAddNewInventory(context),
+            icon: Icon(Icons.add), onPressed: () {
+              
+              Navigator.of(context).pushReplacement(
+
+                MaterialPageRoute(
+
+                  builder: (context) => NewInventory(),
+
+                )
+              );
+          },
+
           ),
         ],
       ),
@@ -297,9 +308,7 @@ class _InventoryListState extends State<InventoryList> {
 }
 
 class NewInventory extends StatefulWidget {
-  final Function addItm;
 
-  NewInventory(this.addItm);
 
   @override
   _NewInventoryState createState() => _NewInventoryState();
@@ -333,14 +342,24 @@ class _NewInventoryState extends State<NewInventory> {
       return;
     }
 
-    widget.addItm(
+    print(enteredTitle);
+    print(enteredAmount);
+    print(enteredCategory);
+    String response;
+    addAlbum(
       enteredTitle,
       enteredAmount,
       enteredCategory,
       enteredMeasurement,
       enteredTotalSold,
       enteredQuantity,
-    );
+      global.userID
+    ).then((response){
+
+      print('88');
+      print(response);
+
+    });
 
     Navigator.of(context).pop();
   }

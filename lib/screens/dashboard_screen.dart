@@ -247,7 +247,6 @@ class DashboardScreen extends State<StatefulWidgetReg> {
   Widget build(BuildContext context) {
 
 
-
     var now = new DateTime.now();
     var formatter = new DateFormat('MM/dd/yyyy');
     String formattedDate = formatter.format(now);
