@@ -5,6 +5,15 @@ import '../screens/inventory_screen.dart';
 import '../screens/events_screen.dart';
 import '../screens/calendar_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/dashboard_screen.dart';
+
+
+void returnToDashboard(BuildContext context) {
+Navigator.of(context).pop();
+Navigator.of(context).pushNamed(StatefulWidgetReg.routeName);
+}
+
+
 
 class MyDrawer extends StatelessWidget {
   Widget buildListTile(
@@ -36,6 +45,7 @@ class MyDrawer extends StatelessWidget {
           }),
           buildListTile(
               'Inventory', AssetImage('assets/images/icon-products.png'), () {
+            Navigator.of(context).pop();
             Navigator.of(context).pop();
             Navigator.of(context).pushNamed(InventoryScreen.routeName);
           }),
