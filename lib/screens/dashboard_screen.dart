@@ -174,7 +174,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
      createAlbum2(global.userID).then((futureAlbum2) {
 
-       if(futureAlbum2 != null) {
+       if(futureAlbum != null) {
          MoneyRaised = futureAlbum2.MoneyRaised;
          Name = futureAlbum2.Name;
          StartDate = futureAlbum2.StartDate;
@@ -190,7 +190,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
      createAlbum(global.userID).then((futureAlbum) => setState((){
 
-       if(!futureAlbum.isEmpty)
+       if(futureAlbum.isNotEmpty)
       futureAlbum.sort((a,b) => a.Stock.compareTo(b.Stock));
 
        Name1 = "";
