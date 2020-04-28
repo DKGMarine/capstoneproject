@@ -364,8 +364,7 @@ class _NewInventoryState extends State<NewInventory> {
     print(enteredAmount);
     print(enteredCategory);
     String response;
-    addAlbum(enteredTitle, enteredAmount, enteredQuantity, enteredTotalSold,
-            enteredMeasurement, enteredCategory, global.userID)
+    addAlbum(enteredTitle, enteredAmount, enteredQuantity, enteredTotalSold,enteredCategory, enteredMeasurement, global.userID)
         .then((response) {
       print('88');
       print(response);
