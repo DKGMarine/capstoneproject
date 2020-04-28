@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutboard/screens/groups_detail_screen.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
@@ -25,46 +26,60 @@ Page: '/addScoutMembers'
 
 */
 
+/*class Album {
+  // change this to parse what data you need
 
-class Album{ // change this to parse what data you need
+  final String firstName;
+  final String lastName;
+  final String sold;
+  final String stock;
+  final String rank;
+  final String scoutID;
 
-  final int ID;
-  Album({this.ID});
+  Album(
+      {this.firstName,
+      this.lastName,
+      this.sold,
+      this.stock,
+      this.rank,
+      this.scoutID});
 
-  factory Album.fromJson(Map<String, dynamic> json){
-
+  factory Album.fromJson(Map<String, dynamic> json) {
     return Album(
-      ID: json['ID'],
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      sold: json['Sold'],
+      stock: json['Stock'],
+      rank: json['Rank'],
+      scoutID: json['ScoutID'],
     );
-
-
   }
 }
 
-Future<Album> createAlbum(String ID) async {
+List<Album> parseAlbums(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
 
+  return parsed.map<Album>((json) => Album.fromJson(json)).toList();
+}
 
-  ID = '25275';
+Future<List<Album>> createAlbum(String id) async {
+ //ID = '25275';
   final http.Response response = await http.post(
-      'https://scoutboard.appspot.com/teams', // change this to what page you are requesting data from
+      'http://scoutboard.appspot.com/members', // change this to what page you are requesting data from
 
-      body:
-
-      {
-        'ID': ID,
-      }
-
-  );
-
+      body: {
+        'ScoutID': id,
+      });
 
   if (response.statusCode == 200) {
     // If the server did return a 200 CREATED response,
     // then parse the JSON.
 
+    print('1');
     print(json.decode(response.body));
-    try{
-      return Album.fromJson(json.decode(response.body));
-    }catch(err) {
+    try {
+      return compute(parseAlbums, response.body);
+    } catch (err) {
       print("Error in returning album");
       return null;
     }
@@ -74,7 +89,44 @@ Future<Album> createAlbum(String ID) async {
     throw Exception('Failed to load album');
   }
 }
-class Member {
+
+Future addAlbum(String firstName, String lastName, String sold,
+    String stock, String rank, String id) async {
+  //ID = '25275';
+  final http.Response response = await http.post(
+      'http://scoutboard.appspot.com/addScoutMembers', // change this to what page you are requesting data from
+
+      body: {
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Stock': stock,
+        'Sold': sold,
+        'Stock': stock,
+        'ScoutID': id,
+      });
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+
+    print('1');
+    print(json.decode(response.body));
+    return response.body;
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+*/
+
+/*
+-------------------
+
+*/
+
+
+/*class Member {
   final String name, age;
   const Member(
     {
@@ -83,10 +135,43 @@ class Member {
     }
     
   );
+}*/
+Future createAlbum(String firstName, String lastName, String sold,
+    String stock, String rank, String scoutID) async {
+
+  final http.Response response = await http.post(
+      'http://scoutboard.appspot.com/addScoutMembers',
+      body:
+
+      {
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Stock': stock,
+        'Sold': sold,
+        'Rank': rank,
+        'ScoutID': scoutID,
+      }
+
+  );
+
+  print(response.body);
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+    return response.body;
+
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
 }
+
+
 
 class GroupsScreen extends StatefulWidget{
   static const routeName = '/groups-screen';
+  
   @override
 
   GroupsScreenState createState() => new GroupsScreenState();
@@ -94,9 +179,17 @@ class GroupsScreen extends StatefulWidget{
 }
 
 class GroupsScreenState extends State<GroupsScreen>{
-  var _nameController = new TextEditingController();
+  String firstName;
+  String lastName;
+  String sold;
+  String stock;
+  String rank;
+  String scoutID;
+  final _nameController = new TextEditingController();
+  final _lastNameController = new TextEditingController();
+  final _stockController = new TextEditingController();
+
   var _ageController1 = new TextEditingController();
-  Future<Album> futureAlbum;
   List<String> item = [];
   String temp;
   final TextEditingController eCtrl = new TextEditingController();
@@ -134,27 +227,32 @@ class GroupsScreenState extends State<GroupsScreen>{
           ),
           Align(
             alignment: Alignment.topLeft,
-            child: Text('Age',style: TextStyle(fontSize: 20)),
+            child: Text('Last Name',style: TextStyle(fontSize: 20)),
           ),
          TextField(
               decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(),
-              hintText: 'Enter Members Age',
+              hintText: 'Enter Members Last Name',
               filled:true,
 
             ),
-            controller: _ageController1,
+            controller: _lastNameController,
          ),
           
          new RaisedButton(
            child: Text('Add Member'),
            onPressed: (){
-             
+             firstName = _nameController.text;
+             lastName = _lastNameController.text;
+             sold = '1';
+             stock = 'empty';
+             rank = 'empty';
+             scoutID = '25275';
              setState(() {
               item.add(temp);
                //_nameController.clear();
              });
-
+              createAlbum(firstName, lastName, sold, stock, rank, scoutID);
              Navigator.pop(context);
            },
          )
@@ -176,7 +274,8 @@ class GroupsScreenState extends State<GroupsScreen>{
           )
         ],
       ),
-      body: new Column(
+      body:
+       new Column(
         children: <Widget>[
           
           new Expanded(
@@ -191,10 +290,10 @@ class GroupsScreenState extends State<GroupsScreen>{
                       var route = new MaterialPageRoute(
                         builder: (BuildContext context) =>
                           new GroupdetailWidget(
-                            value: Member(
-                              name: _nameController.text,
+                            /*value: Album(
+                              firstName: _nameController.text,
                               age: _ageController1.text,
-                            )
+                            )*/
                           )
                         );
                         Navigator.of(context).push(route);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scoutboard/screens/events_screen.dart';
 import 'package:scoutboard/screens/groups_screen.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
@@ -7,7 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 
-class Album{ // change this to parse what data you need
+/*class Album{ // change this to parse what data you need
 
   final int ID;
   Album({this.ID});
@@ -52,7 +53,7 @@ Future<Album> createAlbum(String ID) async {
     throw Exception('Failed to load album');
   }
 }
-
+*/
 class Info {
   int sales;
   String event;
@@ -69,9 +70,9 @@ class Info {
 }
 
 class GroupdetailWidget extends StatefulWidget {
-  final Member value;
+  //final Album value;
 
-  GroupdetailWidget({Key key, this.value}) : super(key: key);
+ // GroupdetailWidget({Key key, this.value}) : super(key: key);
   @override
   _GroupState createState() => new _GroupState();
 }
@@ -108,19 +109,22 @@ class _GroupState extends State<GroupdetailWidget> {
     return new Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('${widget.value.name}'),
+        title: Text('Member Detail'
+       // title: Text('${widget.value.name}'
+        ),
       ),
         
       body: new Column(
         children:<Widget>[
           Container(
             alignment: Alignment.topLeft,
-            child: Text('Member: ${widget.value.name}', style: TextStyle(fontSize: 20)),
+            child: Text('Member:', style: TextStyle(fontSize: 20)),
+            //child: Text('Member: ${widget.value.name}', style: TextStyle(fontSize: 20)),
           ),
           Container(
             padding: EdgeInsets.only(bottom: 50),
             alignment: Alignment.topLeft,
-            child: Text('Age: ${widget.value.age}', style: TextStyle(fontSize: 20)),
+           // child: Text('Age: ${widget.value.age}', style: TextStyle(fontSize: 20)),
           ),
             
             Container(
