@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import '../screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:scoutboard/color/colors.dart';
 import 'package:scoutboard/screens/groups_detail_screen.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
@@ -137,32 +137,8 @@ Future addAlbum(String firstName, String lastName, String sold,
     
   );
 }*/
-Future album(String scoutID) async {
-
-  final http.Response response = await http.post(
-      'http://scoutboard.appspot.com/members',
-      body:
-
-      {
-        'ScoutID': scoutID,
-      }
-
-  );
-
-  print(response.body);
-  if (response.statusCode == 200) {
-    // If the server did return a 200 CREATED response,
-    // then parse the JSON.
-    return response.body;
-
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
 Future createAlbum(String firstName, String lastName, String sold,
-    String stock, String rank, String id) async {
+    String stock, String rank, String scoutID) async {
 
   final http.Response response = await http.post(
       'http://scoutboard.appspot.com/addScoutMembers',
@@ -174,7 +150,7 @@ Future createAlbum(String firstName, String lastName, String sold,
         'Stock': stock,
         'Sold': sold,
         'Rank': rank,
-        'ScoutID': id,
+        'ScoutID': scoutID,
       }
 
   );
@@ -204,23 +180,22 @@ class GroupsScreen extends StatefulWidget{
 }
 
 class GroupsScreenState extends State<GroupsScreen>{
-  //Future<List<createAlbum>> futureAlbum;
   String firstName;
   String lastName;
   String sold;
   String stock;
   String rank;
-  String id;
+  String scoutID;
   final _nameController = new TextEditingController();
   final _lastNameController = new TextEditingController();
   final _stockController = new TextEditingController();
 
   var _ageController1 = new TextEditingController();
   List<String> item = [];
-  String temp, temp2;
+  String temp;
   final TextEditingController eCtrl = new TextEditingController();
-  
-  
+
+
  
   @override
   Widget build(BuildContext context){
@@ -229,23 +204,6 @@ class GroupsScreenState extends State<GroupsScreen>{
      // print('1');
 
    // });
-  album(global.userID).then((createAlbum) {
-
-       if(createAlbum != null) {
-         firstName = createAlbum.firstName;
-         lastName = createAlbum.lastName;
-         sold = createAlbum.sold;
-         stock = createAlbum.stock;
-         rank = createAlbum.rank;
-       }
-    }
-    ).catchError((e){
-      print("Error in getting closest event");
-    });
-    /*album(global.userID).then((createAlbum) => setState(() {
-              firstName = _nameController.text;
-             lastName = _lastNameController.text;
-      }));*/
   void _modalPress(){
     showModalBottomSheet(context: context, 
     builder: (context){
@@ -254,84 +212,49 @@ class GroupsScreenState extends State<GroupsScreen>{
           
           Align(
             alignment: Alignment.topLeft,
-            //child: Text('Name', style: TextStyle(fontSize: 20)),
+            child: Text('Name', style: TextStyle(fontSize: 20)),
           ),
           TextField(
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'First Name',
-                    labelStyle: TextStyle(
-                      color: AppColors.primaryText,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                  ),
-                  controller: _nameController,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(),
+              hintText: 'Enter Members Name',
+              filled:true,
+
+            ),
+            controller: _nameController,
             onChanged: (text){
               temp = text;
             },
-                  
-                ),
-          
+          ),
           Align(
             alignment: Alignment.topLeft,
-           // child: Text('Last Name',style: TextStyle(fontSize: 20)),
+            child: Text('Last Name',style: TextStyle(fontSize: 20)),
           ),
-          TextField(
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Last Name',
-                    labelStyle: TextStyle(
-                      color: AppColors.primaryText,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                  ),
-                  controller: _lastNameController,
-                  onChanged: (text2){
-                    temp2 = text2;
-                  },
-                ),
-     
+         TextField(
+              decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(),
+              hintText: 'Enter Members Last Name',
+              filled:true,
+
+            ),
+            controller: _lastNameController,
+         ),
           
-         new RaisedButton(shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40.0),),
-           
+         new RaisedButton(
            child: Text('Add Member'),
-           color: AppColors.secondaryElement,
            onPressed: (){
              firstName = _nameController.text;
              lastName = _lastNameController.text;
              sold = '1';
              stock = 'empty';
              rank = 'empty';
-             id = global.userID;
+             scoutID = '25275';
              setState(() {
               item.add(temp);
-               _nameController.clear();
-               _lastNameController.clear();
+               //_nameController.clear();
              });
-              createAlbum(firstName, lastName, sold, stock, rank, id);
-              Navigator.pop(context);
+              createAlbum(firstName, lastName, sold, stock, rank, scoutID);
+             Navigator.pop(context);
            },
          )
         ],
@@ -340,9 +263,14 @@ class GroupsScreenState extends State<GroupsScreen>{
       
     });
   } 
-  
     return new Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(StatefulWidgetReg.routeName);
+            }),
         elevation: 0,
         title: Text('Scouts'),
         actions: <Widget>[

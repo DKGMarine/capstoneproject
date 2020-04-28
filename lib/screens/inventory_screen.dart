@@ -222,6 +222,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
           onPressed: () {
             setState(() {
               _startAddNewEvent(context);
+              
+              
             });
           }),
     );
@@ -229,7 +231,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
 }
 
 class InventoryList extends StatefulWidget {
+  static const routeName = '/inventory-screen';
   final List<Album> futureAlbum;
+  
 
   InventoryList({Key key, this.futureAlbum}) : super(key: key);
 
@@ -302,10 +306,16 @@ class _InventoryListState extends State<InventoryList> {
                           color: Colors.red,
                           icon: Icons.delete,
                           onTap: () {
-                            setState(() {
-                              deleteAlbum(widget.futureAlbum[index].scoutID,
-                                  widget.futureAlbum[index].name);
+                            
+                              deleteAlbum(widget.futureAlbum[index].scoutID, widget.futureAlbum[index].name).then((futureAlbum) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(InventoryList.routeName);
+                            }
+                            ).catchError((e){
+                              
                             });
+                                  
+                            
                           }),
                     ],
                   ),
