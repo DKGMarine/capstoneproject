@@ -79,6 +79,8 @@ class Album2 {
 }
 
 Future<Album2> createAlbum2(String ID) async {
+
+  ID = '25275';
   final http.Response response = await http
       .post('https://scoutboard.appspot.com/getting_closestEvent', body: {
     'ScoutID': ID,
@@ -163,7 +165,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
 
   DashboardScreen() {
     createAlbum2(global.userID).then((futureAlbum2) {
-      if (futureAlbum != null) {
+      if(futureAlbum2.MoneyRaised != null) {
         MoneyRaised = futureAlbum2.MoneyRaised;
         Name = futureAlbum2.Name;
         StartDate = futureAlbum2.StartDate;
@@ -172,6 +174,7 @@ class DashboardScreen extends State<StatefulWidgetReg> {
         Location = futureAlbum2.Location;
         Time = futureAlbum2.Time;
       }
+
     }).catchError((e) {
       print("Error in getting closest event");
     });
