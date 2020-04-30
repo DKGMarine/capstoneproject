@@ -6,6 +6,7 @@ import '../screens/events_screen.dart';
 import '../screens/calendar_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/dashboard_screen.dart';
+import '../screens/sales_screen.dart';
 
 
 void returnToDashboard(BuildContext context) {
@@ -48,6 +49,11 @@ class MyDrawer extends StatelessWidget {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
             Navigator.of(context).pushNamed(InventoryScreen.routeName);
+          }),
+          buildListTile(
+              'Sales', AssetImage('assets/images/icon-sales.png'), () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(SalesScreen.routeName);
           }),
           buildListTile('Events', AssetImage('assets/images/icon-invoices.png'), () {
             Navigator.of(context).pop();
