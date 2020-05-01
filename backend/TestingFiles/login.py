@@ -7,7 +7,7 @@ class BasicTests(unittest.TestCase):
     def test_signup(self):
 
         print("\nThe login test")
-        url =  "http://127.0.0.1:5000//login"
+        url =  "http://scoutboard.appspot.com/login"
 
         with open('data.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
