@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutboard/screens/events_screen.dart';
 import 'package:scoutboard/screens/groups_screen.dart';
@@ -53,7 +54,7 @@ Future<Album> createAlbum(String ID) async {
     throw Exception('Failed to load album');
   }
 }
-*/
+*//*
 class Info {
   int sales;
   String event;
@@ -198,5 +199,143 @@ class _GroupState extends State<GroupdetailWidget> {
       )
     );
     
+  }
+}
+*/
+/* ___________________- */
+
+class Album {
+  // change this to parse what data you need
+
+  final String firstName;
+  final String lastName;
+  final String sold;
+  final String stock;
+  final String rank;
+  final String scoutID;
+  Album(
+      {this.firstName,
+      this.lastName,
+      this.sold,
+      this.stock,
+      this.rank,
+      this.scoutID});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      firstName: json['FirstName'],
+      lastName: json['LastName'],
+      sold: json['Sold'],
+      stock: json['Stock'],
+      rank: json['Rank'],
+      scoutID: json['ScoutID'],
+    );
+  }
+}
+
+Future<List<Album>> createAlbum(String id) async {
+  final http.Response response = await http.post(
+      'http://scoutboard.appspot.com/members', // change this to what page you are requesting data from
+
+      body: {
+        'ScoutID': id,
+      });
+
+ if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+
+    print('1');
+    print(response.body);
+    //print(json.decode(response.body));
+    try {
+      return compute(parseAlbums, response.body);
+    } catch (err) {
+      print("Error in returning album");
+      return null;
+    }
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+List<Album> parseAlbums(String responseBody) {
+  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Album>((json) => Album.fromJson(json)).toList();
+}
+
+Future addAlbum(String firstName, String lastName, String sold, String stock,
+    String rank, String id) async {
+  //ID = '25275';
+  final http.Response response = await http.post(
+      'http://scoutboard.appspot.com/addScoutMembers', // change this to what page you are requesting data from
+
+      body: {
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Sold': sold,
+        'Stock': stock,
+        'Rank': rank,
+        'ScoutID': id,
+      });
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+
+    print('1');
+    print(response.body);
+   // print(json.decode(response.body));
+    return response.body;
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+class GroupdetailWidget  extends StatefulWidget {
+  //static const routeName = '/dashboard-screen';
+  final String value;
+  final String last;
+  GroupdetailWidget ({Key key, this.value, this.last}) : super(key: key);
+
+  @override
+  _GroupState createState() {
+    return _GroupState();
+  }
+}
+
+class _GroupState extends State<GroupdetailWidget > {
+  Future<List<Album>> futureAlbum;
+  String firstName;
+  String lastName;
+  String sold;
+  String stock;
+  String rank;
+  String scoutID;
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        elevation: 0,
+        title: new Text("${widget.value}"),
+      ),
+      body: new Column(
+        children:<Widget>[
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text('Member: ${widget.value} ${widget.last}', style: TextStyle(fontSize: 20)),
+            //child: Text('Member: ${widget.value.name}', style: TextStyle(fontSize: 20)),
+          ),
+        ]
+      )
+    );
   }
 }

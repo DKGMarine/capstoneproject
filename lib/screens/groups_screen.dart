@@ -457,7 +457,7 @@ class _ScoutsListState extends State<ScoutsList> {
                           onTap: (){
                             var route = new MaterialPageRoute(
                               builder: (BuildContext context) =>
-                              new GroupdetailWidget()
+                              new GroupdetailWidget(value: widget.futureAlbum[index].firstName, last: widget.futureAlbum[index].lastName)
                               );
                               Navigator.of(context).push(route);
                           },
