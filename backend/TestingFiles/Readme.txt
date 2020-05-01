@@ -3,7 +3,7 @@
 This is all the files we used for testing. We divided it into multiple files to test every route seperatly
 
 # Finished Test:
-
+- [X] Hey
   - [X] Login Testingg
   - [X] Signup Testing
   - [X] Adding Fundraiser/Event
