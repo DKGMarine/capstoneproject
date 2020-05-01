@@ -16,6 +16,8 @@ from addScoutMembers import addScoutMembers
 from modifyInventory import modifyInventory
 from getting_closestEvent import getting_closestEvent
 from delete_member import delete_member
+from modify_fundraiser import modify_fundraiser
+from forgot_password import forgot_password
 
 app = Flask(__name__)
 
@@ -33,13 +35,7 @@ app.register_blueprint(overview) #Done
 app.register_blueprint(getting_closestEvent) #Done
 app.register_blueprint(modifyInventory) #Done
 app.register_blueprint(delete_member) #Done
-
-
-
-#Modify fundraiserID 
-#Team Members deleteing Works? Needs testing to verify more
-#Modify Team Members ? Needs testing to verify More
-
+app.register_blueprint(modify_fundraiser)#Done
 
 #Added but not used
 app.register_blueprint(teamsWithNoFundraiser)
@@ -47,8 +43,6 @@ app.register_blueprint(teamsWithFundraiser)
 app.register_blueprint(teams)
 
 
-#app.register_blueprint(forgotPassword)
-#app.register_blueprint(changePassword)
 #Encryption
 
 if __name__ == '__main__':

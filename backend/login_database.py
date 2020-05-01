@@ -327,9 +327,9 @@ class loginDatabase:
             u'NumberOfSales' : str(NumberOfSales),
             u'StockHad' : str(StockHad),
             u'Rank' : str(Rank),
-            u'ScoutID' : str(ScoutID)
+            u'ScoutID' : str(ScoutID),
+            u'memberID' : doc_ref.id,
         }
-
 
         doc_ref.set(data)
         return "Success"
@@ -380,7 +380,7 @@ class loginDatabase:
             return "Email Not Found"
 
         message = Mail(
-            from_email='<EMAIL>',
+            from_email='metwally.bassam@gmail.com',
             to_emails=str(Email),
             subject='Password Reset for ScoutBoard',
             html_content='Your Password is : {}'.format(password))
@@ -400,10 +400,38 @@ class loginDatabase:
 
         return "None"
 
-
-    def delete_fundraiser(self, Name, ScoutID):
-        doc_ref = db.collection(u'members').where(u'Name', u'==', str(Name)).where(u'ScoutID', u'==', str(ScoutID)).stream()
+    def delete_fundraiser(self, ID):
+        doc_ref = db.collection(u'members').where(u'fundraiserID', u'==', str(ID)).stream()
         for doc in doc_ref:
             doc.reference.delete()
 
+        return "Success"
+
+    #Needs to update the right Variables
+    def Modify_fundraiser(self, fundraiserID, Name, Location, Time, StartDate, EndDate, MoneyRaised, TargetGoal):
+        doc_ref = db.collection(u'fundraiser').where(u'fundraiserID',u'==', str(fundraiserID)).stream()
+        for doc in doc_ref:
+            doc.reference.update({
+                        u'Name' : Name,
+                        u'Location' : Location,
+                        u'Time': Time,
+                        u'StartDate' : StartDate,
+                        u'EndDate' : EndDate,
+                        u'MoneyRaised' : MoneyRaised,
+                        u'TargetGoal' : TargetGoal})
+        return "Success"
+
+    def modify_Members(self, memberID, FirstName, LastName, NumberOfSales,StockHad, Rank):
+
+        doc_ref = db.collection(u'member').where(u'memberID',u'==', str(memberID)).stream()
+
+        data = {
+            u'FirstName' : str(FirstName),
+            u'LastName'  : str(LastName),
+            u'NumberOfSales' : str(NumberOfSales),
+            u'StockHad' : str(StockHad),
+            u'Rank' : str(Rank)
+        }
+
+        doc_ref.set(data)
         return "Success"
