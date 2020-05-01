@@ -4,7 +4,7 @@ This is all the files we used for testing. We divided it into multiple files to 
 
 # Finished Test:
 
-  - [X] Login Testing
+  - [X] Login Testingg
   - [X] Signup Testing
   - [X] Adding Fundraiser/Event
   - [X] Getting Fundraiser/Events
