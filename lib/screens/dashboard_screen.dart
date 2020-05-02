@@ -7,8 +7,6 @@ import 'package:scoutboard/widgets/globals.dart' as global;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'package:scoutboard/widgets/globals.dart' as global;
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Album {
