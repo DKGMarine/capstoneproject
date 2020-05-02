@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:scoutboard/screens/events_screen.dart';
 import 'package:scoutboard/screens/groups_screen.dart';
 import 'package:scoutboard/widgets/globals.dart' as global;
@@ -7,6 +10,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../color/colors.dart';
+import 'dashboard_screen.dart';
+import 'sales_screen.dart';
 
 
 /*class Album{ // change this to parse what data you need
@@ -204,6 +211,7 @@ class _GroupState extends State<GroupdetailWidget> {
 */
 /* ___________________- */
 
+
 class Album {
   // change this to parse what data you need
 
@@ -301,7 +309,8 @@ class GroupdetailWidget  extends StatefulWidget {
   //static const routeName = '/dashboard-screen';
   final String value;
   final String last;
-  GroupdetailWidget ({Key key, this.value, this.last}) : super(key: key);
+  final String salesd;
+  GroupdetailWidget ({Key key, this.value, this.last, this.salesd}) : super(key: key);
 
   @override
   _GroupState createState() {
@@ -334,6 +343,57 @@ class _GroupState extends State<GroupdetailWidget > {
             child: Text('Member: ${widget.value} ${widget.last}', style: TextStyle(fontSize: 20)),
             //child: Text('Member: ${widget.value.name}', style: TextStyle(fontSize: 20)),
           ),
+           Container(
+              padding: EdgeInsets.only(bottom: 0),
+              alignment: Alignment.topCenter,
+              child: Text('Events',style: TextStyle(fontSize: 25)),
+                  
+            ),
+          Container(
+            
+              padding: EdgeInsets.only(bottom: 0),
+              alignment: Alignment.topCenter,
+              child: Text('Sales',style: TextStyle(fontSize: 30)),
+            ),
+          Padding(
+                padding: EdgeInsets.all(15.0),
+                
+                child: new CircularPercentIndicator(
+                  radius: 180.0,
+                  lineWidth: 10.0,
+                  percent: .30,
+                  center: new Text("30% of Sales made"),
+                  backgroundColor: Colors.blueGrey,
+                  progressColor: Colors.blue[300],
+                ),
+              ),
+              Container(
+              padding: EdgeInsets.only(bottom: 0),
+              alignment: Alignment.topCenter,
+              child: Text('Members Raiting',style: TextStyle(fontSize: 25)),
+                  
+            ),
+            Container(
+              padding: EdgeInsets.only(bottom: 40),
+              alignment: Alignment.topCenter,
+              child: 
+              RatingBar(
+              initialRating: 0,
+              minRating: 0.5,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: EdgeInsets.symmetric(horizontal:  .5),
+              itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Colors.blue[200],
+            ),
+              onRatingUpdate: (rating) {
+                print(rating);
+              },
+            ),
+            ),
+
         ]
       )
     );
