@@ -13,6 +13,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../color/colors.dart';
 import '../color/colors.dart';
+import '../color/colors.dart';
 import 'dashboard_screen.dart';
 import 'sales_screen.dart';
 
@@ -212,271 +213,6 @@ class _GroupState extends State<GroupdetailWidget> {
 */
 /* ___________________- */
 
-
-/*
-Future<List<Album>> createAlbum(String id) async {
-  final http.Response response = await http.post(
-      'http://scoutboard.appspot.com/members', // change this to what page you are requesting data from
-
-      body: {
-        'ScoutID': id,
-      });
-
- if (response.statusCode == 200) {
-    // If the server did return a 200 CREATED response,
-    // then parse the JSON.
-
-    print('1');
-    print(response.body);
-    //print(json.decode(response.body));
-    try {
-      return compute(parseAlbums, response.body);
-    } catch (err) {
-      print("Error in returning album");
-      return null;
-    }
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
-Future addAlbum(String name, String price, String stock, String sold,
-    String category, String typeOfM, String id) async {
-  //ID = '25275';
-  final http.Response response = await http.post(
-      'https://scoutboard.appspot.com//modify_member', // change this to what page you are requesting data from
-
-      body: {
-        'Name': name,
-        'Price': price,
-        'Stock': stock,
-        'Sold': sold,
-        'Category': category,
-        'Type_of_M': typeOfM,
-        'ScoutID': id,
-      });
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 CREATED response,
-    // then parse the JSON.
-
-    print('1');
-    print(json.decode(response.body));
-    return response.body;
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
-
-List<Album> parseAlbums(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Album>((json) => Album.fromJson(json)).toList();
-}
-
-Future addAlbumEvent(String name, String price, String stock, String sold,
-    String category, String typeOfM, String id) async {
-  //ID = '25275';
-  final http.Response response = await http.post(
-      'http://scoutboard.appspot.com//addinventory', // change this to what page you are requesting data from
-
-      body: {
-        'Name': name,
-        'Price': price,
-        'Stock': stock,
-        'Sold': sold,
-        'Category': category,
-        'Type_of_M': typeOfM,
-        'ScoutID': id,
-      });
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 CREATED response,
-    // then parse the JSON.
-
-    print('1');
-    print(response.body);
-   // print(json.decode(response.body));
-    return response.body;
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
-
-class GroupdetailWidget  extends StatefulWidget {
-  //static const routeName = '/dashboard-screen';
-  final String value;
-  final String last;
-  GroupdetailWidget ({Key key, this.value, this.last}) : super(key: key);
-
-  @override
-  _GroupState createState() {
-    return _GroupState();
-  }
-}
-
-class _GroupState extends State<GroupdetailWidget > {
-  Future<List<Album>> futureAlbum;
-  
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        elevation: 0,
-        title: new Text("${widget.value}"),
-      ),
-      body: 
-        new Column(
-        children:<Widget>[
-          Container(
-            
-            decoration: BoxDecoration(
-              color: AppColors.accentText,
-             border: Border.all(
-              color: AppColors.accentText,
-                width: 8,
-            ),
-            ),
-            alignment: Alignment.topLeft,
-            child: Text('Member: ${widget.value} ${widget.last}', style: TextStyle(fontSize: 20)),
-            
-            
-          ),
-           
-        ]
-      )
-      
-    );
-  }
-}
-
-
-class NewSale extends StatefulWidget {
-  @override
-  _NewSalesState createState() => _NewSalesState();
-}
-
-class _NewSalesState extends State<NewSale> {
-  final _totalSoldController = TextEditingController();
-
-
-  void _submitData() {
-    final enteredTotalSold = _totalSoldController.text;
-
-    // need to convert to ints to compare
-    var oldAmnt = int.parse(stock);
-    var amntSold = int.parse(enteredTotalSold);
-    var total = int.parse(sold);
-    var diff = oldAmnt - amntSold;  // used to test if there is enough stock
-    total = total + amntSold; // add on new amount sold to previous amount sold
-
-    // convert back to string to output
-    final String difference = diff.toString();
-    final String totalSold = total.toString();
-
-    // check if enough in stock, and that amount sold isn't negative
-    if(diff >= 0 && total >= 0) {
-      addAlbum(
-          name,
-          price,
-          difference,
-          totalSold,
-          category,
-          typeOfM, /*global.userID*/
-          id)
-          .then((response) {
-        print('88');
-        print(response);
-      });
-      Navigator.of(context).pop();
-    }
-    else { // if not enough stock, restore previous information
-      addAlbum(
-          name,
-          price,
-          stock,
-          sold,
-          category,
-          typeOfM, /*global.userID*/
-          id)
-          .then((response) {
-        print('88');
-        print(response);
-      });
-      Navigator.of(context).pop();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      child: Card(
-        margin: EdgeInsets.all(10),
-        elevation: 5,
-        child: Container(
-          color: Color.fromRGBO(40, 73, 100, 1),
-          padding: EdgeInsets.all(10),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                TextField(
-                  style: TextStyle(
-                    color: AppColors.primaryText,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Total Sold',
-                    labelStyle: TextStyle(
-                      color: AppColors.primaryText,
-                    ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                  ),
-                  controller: _totalSoldController,
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: 80),
-                ButtonTheme(
-                  minWidth: 150.0,
-                  height: 50.0,
-                  child: RaisedButton(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(40.0),
-                    ),
-                    child: Text('Add Sale'),
-                    color: AppColors.secondaryElement,
-                    textColor: Theme.of(context).textTheme.button.color,
-                    onPressed: _submitData,
-                  ),
-                ),
-                SizedBox(height: 140),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/
 
 
 
@@ -732,15 +468,53 @@ createAlbum(global.userID).then((futureAlbum) => setState(() {
                   lineWidth: 10.0,
                   percent: (double.parse(moneyRaised) /
                                                       double.parse(targetGoal)),
-                  center: new Text((((double.parse(moneyRaised) /double.parse(targetGoal)) * 100.0).toString() +'%'),
-                                                style: TextStyle(fontSize: 22),
+                  center: new Text((((double.parse(moneyRaised) /double.parse(targetGoal)) * 100.0).toString() +'% of target sold'),
+                                                style: TextStyle(fontSize: 18),
                                               ),
                   backgroundColor: Colors.blueGrey,
                   progressColor: AppColors.secondaryElement,
                 ),
               ),
+         Container(
+            
+            decoration: BoxDecoration(
+              color: AppColors.accentText,
+             border: Border.all(
+              color: AppColors.accentText,
+                width: 0,
+            ),
+            ),
+            alignment: Alignment.center,
+            child: Text('Raiting' ,style: TextStyle(fontSize: 24) ),
+    
+            
+          ),
+          Container(
+              padding: EdgeInsets.only(bottom: 40),
+              alignment: Alignment.topCenter,
 
-           
+              child: 
+              
+              RatingBar(
+              initialRating: 0,
+              minRating: 0.5,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              
+              itemPadding: EdgeInsets.symmetric(horizontal:  .5),
+              itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: AppColors.secondaryElement,
+            ),
+            
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
+            ),
+            
+            ),
+            
         ]
       )
       
